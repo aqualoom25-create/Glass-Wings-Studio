@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glass Wings Studio — CAD-to-3D Staircase, Multi-Building Renderer & 2D Glass Fabrication Suite</title>
+  <style>
+    :root {
+      --bg-dark: #070b11;
+      --panel-bg: rgba(13, 20, 31, 0.92);
+      --panel-card: rgba(21, 31, 46, 0.85);
+      --border: rgba(56, 189, 248, 0.24);
+      --accent: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation & Mode Bar */
+    .topbar {
+      height: 62px;
+      background: var(--panel-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      gap: 12px;
+      z-index: 20;
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-diamond {
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(135deg, #06b6d4, #2563eb);
+      transform: rotate(45deg);
+      border-radius: 4px;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
+      flex-shrink: 0;
+    }
+    .brand-text h1 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: #fff;
+    }
+    .brand-text p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .view-tabs {
+      display: flex;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.9);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    .tab-btn {
+      background: transparent;
+      color: #cbd5e1;
+      border: none;
+      padding: 7px 12px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: #fff;
+      background: rgba(56, 189, 248, 0.12);
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
+    }
+
+    .export-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .btn {
+      background: rgba(30, 41, 59, 0.9);
+      color: var(--text-main);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      padding: 7px 11px;
+      border-radius: 7px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.16);
+      color: #fff;
+    }
+    .btn-emerald {
+      background: linear-gradient(135deg, #059669, #10b981);
+      border-color: #34d399;
+      color: #fff;
+    }
+    .btn-amber {
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      border-color: #fbbf24;
+      color: #fff;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+
+    /* Main Workspace Layout */
+    .workspace {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Left Engineering & Upload Sidebar */
+    .sidebar {
+      width: 350px;
+      background: var(--panel-bg);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    .card {
+      background: var(--panel-card);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .section-title {
+      font-size: 0.73rem;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 9px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* 1. Upload CAD Image / PDF Dropzone */
+    .upload-zone {
+      border: 1.5px dashed rgba(56, 189, 248, 0.5);
+      background: rgba(15, 23, 42, 0.65);
+      border-radius: 9px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+    }
+    .upload-zone h4 {
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      margin-bottom: 4px;
+    }
+    .upload-zone p {
+      font-size: 0.71rem;
+      color: var(--text-muted);
+    }
+    .upload-preview {
+      margin-top: 8px;
+      display: none;
+      background: #000;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      position: relative;
+    }
+    .upload-preview img, .upload-preview canvas {
+      width: 100%;
+      max-height: 120px;
+      object-fit: contain;
+      display: block;
+    }
+    .upload-badge {
+      font-size: 0.7rem;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      padding: 4px 8px;
+      border-radius: 5px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    /* 2. Building & Staircase Preset Cards */
+    .preset-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+    .preset-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 8px;
+      padding: 8px 9px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.16s ease;
+      color: var(--text-main);
+    }
+    .preset-card:hover {
+      border-color: var(--accent);
+    }
+    .preset-card.active {
+      background: rgba(56, 189, 248, 0.16);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 8px rgba(56, 189, 248, 0.25);
+    }
+    .preset-card .t {
+      font-size: 0.77rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .preset-card .s {
+      font-size: 0.67rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Sliders & Inputs */
+    .control-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      margin-bottom: 4px;
+    }
+    .control-row label { color: #cbd5e1; }
+    .control-row .val {
+      color: var(--accent);
+      font-weight: 700;
+      font-family: monospace;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      margin-bottom: 9px;
+      cursor: pointer;
+    }
+    .text-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin-top: 4px;
+    }
+    .text-inputs div {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .text-inputs label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+    .text-inputs input {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      color: #fff;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 0.76rem;
+    }
+
+    /* Live Metrics Strip */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    .metric-box {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 7px;
+      padding: 7px 9px;
+    }
+    .metric-box .k {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+    .metric-box .v {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #34d399;
+      margin-top: 2px;
+      font-family: monospace;
+    }
+
+    /* Viewport Content Area */
+    .viewport-area {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+      background: #05080d;
+    }
+    .pane-3d, .pane-2d {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .pane-2d {
+      border-left: 1px solid var(--border);
+      background: #04070b;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .pane-2d canvas {
+      max-width: 100%;
+      max-height: calc(100% - 48px);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 8px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65);
+      object-fit: contain;
+    }
+    .sheet-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 0 6px;
+      gap: 8px;
+    }
+    .floating-cam-bar {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      background: var(--panel-bg);
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      z-index: 12;
+    }
+    .hidden { display: none !important; }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- TOP NAVIGATION & VIEW MODE BAR -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-diamond"></div>
+      <div class="brand-text">
+        <h1>GLASS WINGS STUDIO — CAD-TO-3D & 2D FABRICATION SUITE</h1>
+        <p>Upload CAD/PDF • Multi-Building 3D Models (Duplex, Rounded Complex, Shopping Mall) • 2D Elevation, CNC Glass & Installation Exports</p>
+      </div>
+    </div>
+
+    <div class="view-tabs">
+      <button class="tab-btn active" data-view="split">🔲 Split View (3D + Live 2D CAD)</button>
+      <button class="tab-btn" data-view="3d">🎮 Full 3D Building Render</button>
+      <button class="tab-btn" data-view="elevation">📐 2D CAD Elevation (#700029)</button>
+      <button class="tab-btn" data-view="fabrication">🪟 2D CNC Glass Fabrication</button>
+      <button class="tab-btn" data-view="installation">🔧 2D Site Installation & BOQ</button>
+    </div>
+
+    <div class="export-group">
+      <button class="btn btn-amber" id="btn-export-dxf" title="Download AutoCAD .DXF with 2D Elevation + Glass Cut Sheets">⬇ 2D AutoCAD (.DXF)</button>
+      <button class="btn" id="btn-export-png" title="Download High-Res 2D Engineering Sheet (.PNG)">⬇ 2D Sheet (.PNG)</button>
+      <button class="btn" id="btn-export-pdf" title="Print / Save Complete 2D Fabrication, Elevation & Installation PDF">🖨 2D PDF Report</button>
+      <button class="btn btn-emerald" id="btn-export-obj" title="Download 3D Mesh (.OBJ) for 3ds Max / Blender">⬇ 3D Model (.OBJ)</button>
+      <button class="btn btn-primary" id="btn-export-ms" title="Download Custom Parameterized 3ds Max Script (.MS)">⬇ 3ds Max Script (.MS)</button>
+    </div>
+  </div>
+
+  <!-- MAIN WORKSPACE -->
+  <div class="workspace">
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar">
+      <!-- 1. UPLOAD ANY CAD IMAGE OR PDF TO CREATE 3D STAIRCASE -->
+      <div class="card">
+        <div class="section-title">
+          <span>1. Upload CAD Image / PDF Drawing</span>
+          <span style="color:#10b981;font-size:0.68rem;">Auto-3D</span>
+        </div>
+        <input type="file" id="file-upload" accept="image/*,.pdf,.dxf" style="display:none;" />
+        <div class="upload-zone" id="drop-zone">
+          <h4>📤 Upload Staircase Image or Drawing PDF</h4>
+          <p>Drop PNG, JPG, WEBP, PDF or DXF to extract dimensions & build 3D staircase</p>
+        </div>
+        <div class="upload-preview" id="upload-preview-box">
+          <img id="upload-preview-img" alt="Uploaded CAD Preview" />
+        </div>
+        <div class="upload-badge" id="upload-status-badge"></div>
+        <div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;gap:6px;">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:#cbd5e1;">
+            <input type="checkbox" id="chk-3d-overlay" /> Show Drawing Plane in 3D
+          </label>
+          <button class="btn" id="btn-load-sample-cad" style="padding:4px 8px;font-size:0.7rem;">Load CAD #700029</button>
+        </div>
+      </div>
+
+      <!-- 2. SELECT ZERO-COST PRE-MODELED 3D BUILDING & STAIRCASE TYPE -->
+      <div class="card">
+        <div class="section-title">
+          <span>2. 3D Building & Staircase Model</span>
+          <span style="color:#f59e0b;font-size:0.68rem;">4 Typologies</span>
+        </div>
+        <div class="preset-grid">
+          <div class="preset-card active" data-preset="straight_house">
+            <div class="t">🏠 Duplex Villa (CAD #700029)</div>
+            <div class="s">Straight 15-Step + Stepped 10mm Glass</div>
+          </div>
+          <div class="preset-card" data-preset="rounded_complex">
+            <div class="t">🌀 Commercial Rounded</div>
+            <div class="s">Helical Curved Stair + Bent Glass</div>
+          </div>
+          <div class="preset-card" data-preset="mall_atrium">
+            <div class="t">🏬 Shopping Mall Atrium</div>
+            <div class="s">Twin Grand Stair + Multi-Floor Void</div>
+          </div>
+          <div class="preset-card" data-preset="duplex_u">
+            <div class="t">🏢 Split-Level U-Turn Duplex</div>
+            <div class="s">Double Flight + Mid-Landing Glass</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. PARAMETRIC DIMENSIONS (AUTO-UPDATES 2D & 3D) -->
+      <div class="card">
+        <div class="section-title">
+          <span>3. Parametric Dimensions (mm)</span>
+          <span style="color:#38bdf8;font-size:0.68rem;">2D + 3D Sync</span>
+        </div>
+
+        <div class="control-row">
+          <label>Number of Steps (Per Flight)</label>
+          <span class="val" id="lbl-steps">15 Steps</span>
+        </div>
+        <input type="range" id="inp-steps" min="6" max="22" step="1" value="15" />
+
+        <div class="control-row">
+          <label>Step Tread × Riser (mm)</label>
+          <span class="val" id="lbl-tread-riser">275 × 165 mm</span>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <input type="range" id="inp-tread" min="220" max="360" step="5" value="275" title="Tread Depth (mm)" />
+          <input type="range" id="inp-riser" min="135" max="200" step="5" value="165" title="Riser Height (mm)" />
+        </div>
+
+        <div class="control-row">
+          <label>Staircase Width (mm)</label>
+          <span class="val" id="lbl-width">1150 mm</span>
+        </div>
+        <input type="range" id="inp-width" min="900" max="2400" step="50" value="1150" />
+
+        <div class="control-row">
+          <label>Glass Railing Height (mm)</label>
+          <span class="val" id="lbl-rail">915 mm</span>
+        </div>
+        <input type="range" id="inp-rail" min="800" max="1150" step="5" value="915" />
+
+        <div class="control-row">
+          <label>Toughened Glass Thickness</label>
+          <span class="val" id="lbl-thick">10 mm</span>
+        </div>
+        <input type="range" id="inp-thick" min="8" max="19" step="1" value="10" />
+
+        <div class="control-row">
+          <label>1" Projection Stud Offset</label>
+          <span class="val" id="lbl-stud">25.4 mm</span>
+        </div>
+        <input type="range" id="inp-stud" min="15" max="50" step="0.5" value="25.4" />
+
+        <div class="control-row">
+          <label>Steps Per Glass Panel</label>
+          <span class="val" id="lbl-spp">5 Steps/Panel</span>
+        </div>
+        <input type="range" id="inp-spp" min="3" max="7" step="1" value="5" />
+
+        <div id="curved-controls" class="hidden">
+          <div class="control-row">
+            <label>Helical Inner Radius (mm)</label>
+            <span class="val" id="lbl-radius">2200 mm</span>
+          </div>
+          <input type="range" id="inp-radius" min="1400" max="3800" step="100" value="2200" />
+
+          <div class="control-row">
+            <label>Curve Sweep Angle (°)</label>
+            <span class="val" id="lbl-angle">140°</span>
+          </div>
+          <input type="range" id="inp-angle" min="60" max="270" step="5" value="140" />
+        </div>
+
+        <div class="text-inputs">
+          <div>
+            <label>Client Name (Title Block)</label>
+            <input type="text" id="inp-client" value="Mr. Sundar" />
+          </div>
+          <div>
+            <label>Location / Site</label>
+            <input type="text" id="inp-location" value="Kovilancherry, Chennai" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. LIVE FABRICATION & BOQ METRICS -->
+      <div class="card">
+        <div class="section-title">
+          <span>4. Live Glass & Hardware BOQ</span>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-box"><div class="k">TOTAL RUNNING FEET</div><div class="v" id="m-rft">53.0 Rft</div></div>
+          <div class="metric-box"><div class="k">GLASS PANELS</div><div class="v" id="m-panels">4 Nos</div></div>
+          <div class="metric-box"><div class="k">TOTAL GLASS AREA</div><div class="v" id="m-area">48.5 Sq.Ft</div></div>
+          <div class="metric-box"><div class="k">1" SS 304 STUDS</div><div class="v" id="m-studs">16 Sets</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER / RIGHT VIEWPORT AREA (3D + 2D) -->
+    <div class="viewport-area">
+      <!-- 3D WebGL Pane -->
+      <div class="pane-3d" id="pane-3d">
+        <div class="floating-cam-bar">
+          <button class="btn" id="cam-persp">🏠 3D Building Perspective</button>
+          <button class="btn" id="cam-elev">📐 Side Elevation Camera</button>
+          <button class="btn" id="cam-top">🔼 Atrium Top Orbit</button>
+          <button class="btn" id="cam-stud">🔩 1" Stud & Holder Close-Up</button>
+          <label style="display:flex;align-items:center;gap:5px;font-size:0.75rem;margin-left:6px;cursor:pointer;">
+            <input type="checkbox" id="chk-building-mesh" checked /> Show 3D Building Interior
+          </label>
+        </div>
+      </div>
+
+      <!-- 2D Engineering CAD Pane -->
+      <div class="pane-2d" id="pane-2d">
+        <div class="sheet-toolbar">
+          <div style="display:flex;gap:6px;align-items:center;">
+            <button class="btn" id="sheet-btn-elev">📐 Sheet 1: 2D CAD Elevation (#700029)</button>
+            <button class="btn" id="sheet-btn-fab">🪟 Sheet 2: 2D Glass Fabrication Cut-Sheet</button>
+            <button class="btn" id="sheet-btn-inst">🔧 Sheet 3: 2D Installation & BOQ</button>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <select id="sel-panel-idx" class="btn" style="background:#0f172a;">
+              <option value="0">Panel G-01 (Top Steps)</option>
+              <option value="1">Panel G-02 (Mid Steps)</option>
+              <option value="2">Panel G-03 (Bottom Steps)</option>
+            </select>
+            <button class="btn" id="btn-toggle-cad-theme">🌗 CAD Theme (Black/White)</button>
+          </div>
+        </div>
+        <canvas id="cad-canvas" width="1280" height="820"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+    import { OBJExporter } from 'three/addons/exporters/OBJExporter.js';
+    import {
+      computeEngineeringMetrics,
+      renderElevationCanvas,
+      renderFabricationCanvas,
+      renderInstallationCanvas
+    } from './js/cad-drawings-2d.js';
+    import { generateAutoCADDXF, generateDynamicMaxScript } from './js/dxf-ms-exporter.js';
+
+    // Application State
+    const state = {
+      stairType: 'straight',        // 'straight' | 'rounded' | 'mall_atrium' | 'duplex_u'
+      buildingEnv: 'duplex_house',  // 'duplex_house' | 'commercial_complex' | 'shopping_mall' | 'split_penthouse'
+      numSteps: 15,
+      tread: 275,
+      riser: 165,
+      stairWidth: 1150,
+      railHeight: 915,
+      glassThick: 10,
+      pipeDia: 50,
+      studProj: 25.4,
+      studHoleDia: 18,
+      stepsPerPanel: 5,
+      curveRadius: 2200,
+      curveAngle: 140,
+      clientName: 'Mr. Sundar',
+      projectLocation: 'Kovilancherry, Chennai',
+      drawingNo: '700029',
+      activeSheet: 'elevation',     // 'elevation' | 'fabrication' | 'installation'
+      selectedPanelIdx: 0,
+      cadTheme: 'dark',
+      showBuilding: true,
+      showUploadedOverlay: false,
+      uploadedTexture: null
+    };
+
+    // Setup Three.js 3D Renderer
+    const pane3D = document.getElementById('pane-3d');
+    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    pane3D.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0c131f);
+
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
+
+    const camera = new THREE.PerspectiveCamera(42, 1, 10, 60000);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+
+    // Lights
+    scene.add(new THREE.AmbientLight(0xfff9f0, 0.6));
+    const sunLight = new THREE.DirectionalLight(0xfff5e4, 2.3);
+    sunLight.position.set(2800, 5600, 4200);
+    sunLight.castShadow = true;
+    sunLight.shadow.mapSize.set(2048, 2048);
+    const sd = 5500;
+    sunLight.shadow.camera.left = -sd;
+    sunLight.shadow.camera.right = sd;
+    sunLight.shadow.camera.top = sd;
+    sunLight.shadow.camera.bottom = -sd;
+    sunLight.shadow.camera.near = 200;
+    sunLight.shadow.camera.far = 16000;
+    sunLight.shadow.bias = -0.0005;
+    scene.add(sunLight);
+
+    const warmAtriumLight = new THREE.PointLight(0xffd29d, 2.2, 9500, 1.1);
+    warmAtriumLight.position.set(0, 3200, 1200);
+    scene.add(warmAtriumLight);
+
+    // PBR Materials
+    const glassMtl = new THREE.MeshPhysicalMaterial({
+      color: 0xdcfce7,
+      attenuationColor: new THREE.Color(0x6ee7b7),
+      attenuationDistance: 420,
+      roughness: 0.03,
+      transmission: 0.92,
+      ior: 1.52,
+      thickness: 22,
+      reflectivity: 0.96,
+      transparent: true,
+      opacity: 0.95,
+      side: THREE.DoubleSide
+    });
+    const ss304Mtl = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.96, roughness: 0.16 });
+    const woodTreadMtl = new THREE.MeshStandardMaterial({ color: 0xb4713a, roughness: 0.34, metalness: 0.05 });
+    const marbleStepMtl = new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.18, metalness: 0.05 });
+    const concreteMtl = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, roughness: 0.7 });
+    const wallMtl = new THREE.MeshStandardMaterial({ color: 0xf3f0e8, roughness: 0.8 });
+    const floorMtl = new THREE.MeshStandardMaterial({ color: 0xe2ddd5, roughness: 0.18 });
+    const accentGoldMtl = new THREE.MeshStandardMaterial({ color: 0xfbbf24, metalness: 0.85, roughness: 0.22 });
+    const edgeLineMtl = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.7 });
+
+    const stairGroup = new THREE.Group();
+    stairGroup.name = 'GlassWings_3D_Staircase';
+    scene.add(stairGroup);
+
+    const buildingGroup = new THREE.Group();
+    buildingGroup.name = 'GlassWings_3D_Building';
+    scene.add(buildingGroup);
+
+    // Helper: 1" Projection Stud Hardware
+    function makeStud(x, y, zBase, studProj, glassThick) {
+      const g = new THREE.Group();
+      const barrel = new THREE.Mesh(new THREE.CylinderGeometry(14, 14, studProj, 20), ss304Mtl);
+      barrel.rotation.x = Math.PI / 2;
+      barrel.position.set(x, y, zBase + studProj * 0.5);
+      g.add(barrel);
+
+      const cap = new THREE.Mesh(new THREE.CylinderGeometry(24, 24, 10, 28), ss304Mtl);
+      cap.rotation.x = Math.PI / 2;
+      cap.position.set(x, y, zBase + studProj + glassThick + 5);
+      g.add(cap);
+      return g;
+    }
+
+    // Helper: Pipe-to-Glass Holder Bracket
+    function makeHolder(x, pipeY, glassZ, glassThick) {
+      const g = new THREE.Group();
+      const clampY = pipeY - 75;
+      const disc = new THREE.Mesh(new THREE.CylinderGeometry(19, 19, glassThick + 10, 20), ss304Mtl);
+      disc.rotation.x = Math.PI / 2;
+      disc.position.set(x, clampY, glassZ + glassThick * 0.5);
+      g.add(disc);
+
+      const stem = new THREE.Mesh(new THREE.CylinderGeometry(6, 6, 56, 14), ss304Mtl);
+      stem.position.set(x, clampY + 28, glassZ + glassThick * 0.5);
+      g.add(stem);
+      return g;
+    }
+
+    // Helper: Build a single straight stepped flight with 10mm Toughened Glass, 1" Studs & Ø50mm Pipe
+    function buildStraightFlight( { numSteps, tread, riser, stairWidth, railHeight, glassThick, pipeDia, studProj, stepsPerPanel, stepMat } ) {
+      const flightGrp = new THREE.Group();
+      const totalRun = numSteps * tread;
+      const totalRise = numSteps * riser;
+      const slope = riser / tread;
+
+      // Concrete Waist Slab
+      const waistShape = new THREE.Shape();
+      waistShape.moveTo(-750, totalRise);
+      waistShape.lineTo(0, totalRise);
+      for (let s = 0; s < numSteps; s++) {
+        const sx = s * tread;
+        const syBot = (numSteps - 1 - s) * riser;
+        waistShape.lineTo(sx, syBot);
+        waistShape.lineTo(sx + tread, syBot);
+      }
+      waistShape.lineTo(totalRun + 500, 0);
+      waistShape.lineTo(totalRun + 500, -200);
+      waistShape.lineTo(totalRun, -200);
+      waistShape.lineTo(0, totalRise - 210);
+      waistShape.lineTo(-750, totalRise - 210);
+      waistShape.closePath();
+
+      const waistGeo = new THREE.ExtrudeGeometry(waistShape, { depth: stairWidth, bevelEnabled: false });
+      waistGeo.translate(0, 0, -stairWidth);
+      const waistMesh = new THREE.Mesh(waistGeo, concreteMtl);
+      waistMesh.castShadow = true;
+      waistMesh.receiveShadow = true;
+      flightGrp.add(waistMesh);
+
+      // Step Treads & Risers
+      for (let s = 0; s < numSteps; s++) {
+        const sx = s * tread;
+        const sy = (numSteps - 1 - s) * riser;
+        const treadMesh = new THREE.Mesh(new THREE.BoxGeometry(tread + 18, 28, stairWidth + 16), stepMat);
+        treadMesh.position.set(sx + tread * 0.5, sy + riser - 14, -stairWidth * 0.5);
+        treadMesh.castShadow = true;
+        flightGrp.add(treadMesh);
+
+        const riserMesh = new THREE.Mesh(new THREE.BoxGeometry(24, riser, stairWidth + 10), stepMat);
+        riserMesh.position.set(sx + 12, sy + riser * 0.5, -stairWidth * 0.5);
+        flightGrp.add(riserMesh);
+      }
+
+      // Stepped 10mm Toughened Glass Panels + 1" Projection Studs + Pipe Holders
+      const glassZ = studProj;
+      const topClearance = railHeight - 55;
+
+      for (let pStart = 0; pStart < numSteps; pStart += stepsPerPanel) {
+        const pEnd = Math.min(pStart + stepsPerPanel - 1, numSteps - 1);
+        const gap = 4;
+        const xStart = pStart * tread + gap;
+        const xEnd = (pEnd + 1) * tread - gap;
+        const yTopL = totalRise + topClearance - xStart * slope;
+        const yTopR = totalRise + topClearance - xEnd * slope;
+
+        const pShape = new THREE.Shape();
+        pShape.moveTo(xStart, yTopL);
+        pShape.lineTo(xEnd, yTopR);
+        for (let s = pEnd; s >= pStart; s--) {
+          const sxR = s === pEnd ? xEnd : (s + 1) * tread;
+          const sxL = s === pStart ? xStart : s * tread;
+          const syStep = (numSteps - 1 - s) * riser + 12;
+          pShape.lineTo(sxR, syStep);
+          pShape.lineTo(sxL, syStep);
+        }
+        pShape.closePath();
+
+        const pGeo = new THREE.ExtrudeGeometry(pShape, { depth: glassThick, bevelEnabled: false });
+        pGeo.translate(0, 0, glassZ);
+        const gMesh = new THREE.Mesh(pGeo, glassMtl);
+        flightGrp.add(gMesh);
+
+        const edges = new THREE.EdgesGeometry(pGeo, 15);
+        flightGrp.add(new THREE.LineSegments(edges, edgeLineMtl));
+
+        [pStart, pEnd].forEach((aStep) => {
+          const studY = (numSteps - 1 - aStep) * riser + riser * 0.56;
+          flightGrp.add(makeStud(aStep * tread + tread * 0.30, studY, 0, studProj, glassThick));
+          flightGrp.add(makeStud(aStep * tread + tread * 0.72, studY, 0, studProj, glassThick));
+        });
+
+        const hX1 = xStart + (xEnd - xStart) * 0.22;
+        const hX2 = xStart + (xEnd - xStart) * 0.78;
+        flightGrp.add(makeHolder(hX1, totalRise + railHeight - hX1 * slope, glassZ, glassThick));
+        flightGrp.add(makeHolder(hX2, totalRise + railHeight - hX2 * slope, glassZ, glassThick));
+      }
+
+      // Ø50mm SS 304 Handrail Pipe
+      const pipeZ = glassZ + glassThick * 0.5;
+      const pipeCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(-150, totalRise + railHeight + 150 * slope, pipeZ),
+        new THREE.Vector3(0, totalRise + railHeight, pipeZ),
+        new THREE.Vector3(totalRun, railHeight, pipeZ),
+        new THREE.Vector3(totalRun + 85, railHeight - 85 * slope - 20, pipeZ)
+      ]);
+      const pipeMesh = new THREE.Mesh(new THREE.TubeGeometry(pipeCurve, 48, pipeDia * 0.5, 24, false), ss304Mtl);
+      flightGrp.add(pipeMesh);
+
+      return flightGrp;
+    }
+
+    // Build Rounded / Helical Commercial Staircase with Curved Bent Toughened Glass
+    function buildRoundedHelicalStaircase() {
+      const grp = new THREE.Group();
+      const { numSteps, riser, stairWidth, railHeight, glassThick, pipeDia, studProj, curveRadius, curveAngle } = state;
+      const totalRise = numSteps * riser;
+      const totalRad = (curveAngle * Math.PI) / 180;
+      const stepRad = totalRad / numSteps;
+
+      const innerR = curveRadius - stairWidth * 0.5;
+      const outerR = curveRadius + stairWidth * 0.5;
+
+      // Helical Treads, Risers & Structural Spine
+      for (let s = 0; s < numSteps; s++) {
+        const ang = s * stepRad - totalRad * 0.5;
+        const sy = s * riser;
+
+        // Wedge Tread
+        const treadGeo = new THREE.BoxGeometry(stairWidth, 36, (outerR * stepRad) * 1.08);
+        const treadMesh = new THREE.Mesh(treadGeo, marbleStepMtl);
+        treadMesh.position.set(Math.cos(ang) * curveRadius, sy + riser, Math.sin(ang) * curveRadius);
+        treadMesh.rotation.y = -ang;
+        treadMesh.castShadow = true;
+        grp.add(treadMesh);
+
+        // Central Structural Steel Box Spine Segment
+        const spineMesh = new THREE.Mesh(new THREE.BoxGeometry(240, riser + 50, (curveRadius * stepRad) * 1.15), concreteMtl);
+        spineMesh.position.set(Math.cos(ang) * curveRadius, sy + riser * 0.5, Math.sin(ang) * curveRadius);
+        spineMesh.rotation.y = -ang;
+        grp.add(spineMesh);
+      }
+
+      // Outer & Inner Curved Bent 10mm Toughened Glass Panels + Curved Ø50mm SS 304 Handrails
+      [outerR + studProj, innerR - studProj].forEach((railR, sideIdx) => {
+        const isOuter = sideIdx === 0;
+        const segments = 64;
+        const positions = [];
+        const indices = [];
+
+        for (let i = 0; i <= segments; i++) {
+          const u = i / segments;
+          const ang = u * totalRad - totalRad * 0.5;
+          const stepIdx = Math.min(numSteps - 1, Math.floor(u * numSteps));
+          const yBot = stepIdx * riser + 15;
+          const yTop = u * totalRise + railHeight - 45;
+
+          const x = Math.cos(ang) * railR;
+          const z = Math.sin(ang) * railR;
+          positions.push(x, yBot, z, x, yTop, z);
+
+          if (i < segments) {
+            const a = i * 2;
+            const b = a + 1;
+            const c = a + 2;
+            const d = a + 3;
+            indices.push(a, b, d, a, d, c);
+          }
+        }
+
+        const curvedGlassGeo = new THREE.BufferGeometry();
+        curvedGlassGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        curvedGlassGeo.setIndex(indices);
+        curvedGlassGeo.computeVertexNormals();
+        const curvedGlassMesh = new THREE.Mesh(curvedGlassGeo, glassMtl);
+        grp.add(curvedGlassMesh);
+        grp.add(new THREE.LineSegments(new THREE.EdgesGeometry(curvedGlassGeo, 18), edgeLineMtl));
+
+        // Helical Ø50mm SS 304 Handrail Pipe
+        const railPts = [];
+        for (let i = 0; i <= 40; i++) {
+          const u = i / 40;
+          const ang = u * totalRad - totalRad * 0.5;
+          railPts.push(new THREE.Vector3(Math.cos(ang) * railR, u * totalRise + railHeight, Math.sin(ang) * railR));
+        }
+        const railCurve = new THREE.CatmullRomCurve3(railPts);
+        grp.add(new THREE.Mesh(new THREE.TubeGeometry(railCurve, 64, pipeDia * 0.5, 24, false), ss304Mtl));
+
+        // Radial 1" Projection Studs along the curved steps
+        for (let s = 0; s < numSteps; s += 2) {
+          const ang = (s + 0.5) * stepRad - totalRad * 0.5;
+          const studCap = new THREE.Mesh(new THREE.CylinderGeometry(24, 24, 16, 24), ss304Mtl);
+          studCap.position.set(
+            Math.cos(ang) * (railR + (isOuter ? 8 : -8)),
+            s * riser + riser * 0.65,
+            Math.sin(ang) * (railR + (isOuter ? 8 : -8))
+          );
+          studCap.rotation.z = Math.PI / 2;
+          studCap.rotation.y = -ang;
+          grp.add(studCap);
+        }
+      });
+
+      grp.position.set(0, -totalRise * 0.4, 0);
+      return grp;
+    }
+
+    // Rebuild Complete 3D Staircase + Selected 3D Building Environment
+    function rebuildAll() {
+      while (stairGroup.children.length) stairGroup.remove(stairGroup.children[0]);
+      while (buildingGroup.children.length) buildingGroup.remove(buildingGroup.children[0]);
+
+      const {
+        stairType,
+        numSteps,
+        tread,
+        riser,
+        stairWidth,
+        railHeight,
+        glassThick,
+        pipeDia,
+        studProj,
+        stepsPerPanel,
+        showBuilding
+      } = state;
+
+      const totalRun = numSteps * tread;
+      const totalRise = numSteps * riser;
+
+      if (stairType === 'rounded') {
+        stairGroup.add(buildRoundedHelicalStaircase());
+      } else if (stairType === 'duplex_u') {
+        // U-Turn Split-Level Duplex Staircase (2 Flights + Mid-Landing + Glass Balustrade)
+        const f1 = buildStraightFlight({ ...state, stepMat: woodTreadMtl });
+        f1.position.set(-totalRun * 0.5, -totalRise * 0.35, 0);
+        stairGroup.add(f1);
+
+        const f2 = buildStraightFlight({ ...state, stepMat: woodTreadMtl });
+        f2.scale.x = -1; // Reverse direction for second flight
+        f2.position.set(totalRun * 0.5, totalRise * 0.65, -stairWidth - 280);
+        stairGroup.add(f2);
+
+        // Mid-Landing Slab & Glass Guardrail
+        const midLanding = new THREE.Mesh(
+          new THREE.BoxGeometry(1100, 210, stairWidth * 2 + 320),
+          concreteMtl
+        );
+        midLanding.position.set(totalRun * 0.5 + 450, -totalRise * 0.35 - 105, -stairWidth - 140);
+        stairGroup.add(midLanding);
+      } else if (stairType === 'mall_atrium') {
+        // Shopping Mall Twin Grand Staircase + Atrium Balcony Glass Railings
+        const leftFlight = buildStraightFlight({ ...state, stairWidth: stairWidth * 1.25, stepMat: marbleStepMtl });
+        leftFlight.position.set(-totalRun * 0.5, -totalRise * 0.35, 650);
+        stairGroup.add(leftFlight);
+
+        const rightFlight = buildStraightFlight({ ...state, stairWidth: stairWidth * 1.25, stepMat: marbleStepMtl });
+        rightFlight.position.set(-totalRun * 0.5, -totalRise * 0.35, -850);
+        stairGroup.add(rightFlight);
+
+        // Upper Mall Atrium Perimeter Glass Balustrade
+        const atriumGlass = new THREE.Mesh(
+          new THREE.BoxGeometry(3600, railHeight - 50, glassThick),
+          glassMtl
+        );
+        atriumGlass.position.set(-totalRun * 0.5 - 1800, totalRise * 0.65 + railHeight * 0.5, 650 + studProj);
+        stairGroup.add(atriumGlass);
+      } else {
+        // Default CAD #700029 Straight Staircase in Duplex Villa
+        const flight = buildStraightFlight({ ...state, stepMat: woodTreadMtl });
+        flight.position.set(-totalRun * 0.5, -totalRise * 0.35, 0);
+        stairGroup.add(flight);
+
+        // Upper Mezzanine Balcony Glass Extension ("Extension... 53 Rft")
+        const extGlass = new THREE.Mesh(new THREE.BoxGeometry(1350, railHeight - 55, glassThick), glassMtl);
+        extGlass.position.set(-totalRun * 0.5 - 680, totalRise * 0.65 + (railHeight - 55) * 0.5, studProj);
+        stairGroup.add(extGlass);
+      }
+
+      // Optional Uploaded CAD Blueprint Plane inside 3D Scene
+      if (state.showUploadedOverlay && state.uploadedTexture) {
+        const planeGeo = new THREE.PlaneGeometry(totalRun + 1800, totalRise + railHeight + 1200);
+        const planeMat = new THREE.MeshBasicMaterial({
+          map: state.uploadedTexture,
+          transparent: true,
+          opacity: 0.48,
+          side: THREE.DoubleSide
+        });
+        const planeMesh = new THREE.Mesh(planeGeo, planeMat);
+        planeMesh.position.set(0, totalRise * 0.2, -stairWidth - 40);
+        stairGroup.add(planeMesh);
+      }
+
+      // Build Zero-Cost 3D Architectural Building Environment around the Staircase
+      if (showBuilding) {
+        const floorY = -totalRise * 0.35 - 220;
+        const floorMesh = new THREE.Mesh(new THREE.BoxGeometry(11000, 180, 8500), floorMtl);
+        floorMesh.position.set(0, floorY - 90, -800);
+        floorMesh.receiveShadow = true;
+        buildingGroup.add(floorMesh);
+
+        if (stairType === 'mall_atrium' || stairType === 'rounded') {
+          // Commercial Complex / Shopping Mall Columns, Multi-Level Mezzanine Slabs & Skylight Ring
+          const mezSlab = new THREE.Mesh(new THREE.BoxGeometry(11000, 240, 3200), concreteMtl);
+          mezSlab.position.set(0, totalRise * 0.65 - 120, -2800);
+          buildingGroup.add(mezSlab);
+
+          // Atrium Glass Balustrade along Upper Mall Gallery
+          const galGlass = new THREE.Mesh(new THREE.BoxGeometry(9200, railHeight, glassThick), glassMtl);
+          galGlass.position.set(0, totalRise * 0.65 + railHeight * 0.5, -1200);
+          buildingGroup.add(galGlass);
+
+          // 4 Cylindrical Commercial Atrium Columns with Gold Rings
+          [-3600, 3600].forEach((cx) => {
+            [-2200, 1800].forEach((cz) => {
+              const col = new THREE.Mesh(new THREE.CylinderGeometry(210, 210, totalRise + 2800, 32), wallMtl);
+              col.position.set(cx, floorY + (totalRise + 2800) * 0.5, cz);
+              col.castShadow = true;
+              buildingGroup.add(col);
+
+              const ring = new THREE.Mesh(new THREE.CylinderGeometry(225, 225, 60, 32), accentGoldMtl);
+              ring.position.set(cx, totalRise * 0.65, cz);
+              buildingGroup.add(ring);
+            });
+          });
+        } else {
+          // Luxury Duplex House Interior Walls, Mezzanine Balcony & Modern Chandelier
+          const backWall = new THREE.Mesh(new THREE.BoxGeometry(8600, totalRise + 2800, 200), wallMtl);
+          backWall.position.set(0, floorY + (totalRise + 2800) * 0.5, -stairWidth - 900);
+          backWall.receiveShadow = true;
+          buildingGroup.add(backWall);
+
+          const leftWall = new THREE.Mesh(new THREE.BoxGeometry(200, totalRise + 2800, 7200), wallMtl);
+          leftWall.position.set(-totalRun * 0.5 - 1450, floorY + (totalRise + 2800) * 0.5, -400);
+          buildingGroup.add(leftWall);
+
+          // Duplex Chandelier Rings
+          const chanRing1 = new THREE.Mesh(new THREE.TorusGeometry(420, 14, 16, 48), accentGoldMtl);
+          chanRing1.rotation.x = Math.PI / 2;
+          chanRing1.position.set(600, totalRise + 1350, 900);
+          buildingGroup.add(chanRing1);
+        }
+      }
+
+      // Synchronize Live BOQ Metrics & 2D Engineering Canvas
+      update2DAndMetrics();
+    }
+
+    function update2DAndMetrics() {
+      const metrics = computeEngineeringMetrics(state);
+      document.getElementById('m-rft').textContent = `${metrics.totalRft} Rft`;
+      document.getElementById('m-panels').textContent = `${metrics.totalGlassPanels} Nos`;
+      document.getElementById('m-area').textContent = `${metrics.totalGlassAreaSqFt} Sq.Ft`;
+      document.getElementById('m-studs').textContent = `${metrics.totalStuds} Sets`;
+
+      // Update panel selector dropdown
+      const sel = document.getElementById('sel-panel-idx');
+      const prevVal = parseInt(sel.value, 10) || 0;
+      sel.innerHTML = '';
+      metrics.panels.forEach((p, idx) => {
+        const opt = document.createElement('option');
+        opt.value = String(idx);
+        opt.textContent = `Panel ${p.code} (${p.stepRange} — ${p.widthMm}mm)`;
+        sel.appendChild(opt);
+      });
+      sel.value = String(Math.min(prevVal, metrics.panels.length - 1));
+      state.selectedPanelIdx = parseInt(sel.value, 10) || 0;
+
+      const cadCanvas = document.getElementById('cad-canvas');
+      if (state.activeSheet === 'elevation') {
+        renderElevationCanvas(cadCanvas, state, state.cadTheme);
+      } else if (state.activeSheet === 'fabrication') {
+        renderFabricationCanvas(cadCanvas, state, state.selectedPanelIdx);
+      } else {
+        renderInstallationCanvas(cadCanvas, state);
+      }
+    }
+
+    // Handle Resize
+    function resizeViewports() {
+      const rect = pane3D.getBoundingClientRect();
+      if (rect.width > 10 && rect.height > 10) {
+        camera.aspect = rect.width / rect.height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(rect.width, rect.height);
+      }
+    }
+    window.addEventListener('resize', resizeViewports);
+
+    // Camera Presets
+    function setCamera(mode) {
+      if (mode === 'persp') {
+        camera.position.set(1800, 1450, 4400);
+        controls.target.set(0, 320, -200);
+      } else if (mode === 'elev') {
+        camera.position.set(0, 420, 4800);
+        controls.target.set(0, 420, 0);
+      } else if (mode === 'top') {
+        camera.position.set(600, 4900, 2600);
+        controls.target.set(0, 200, -400);
+      } else if (mode === 'stud') {
+        camera.position.set(-550, 680, 950);
+        controls.target.set(-750, 580, 25);
+      }
+      controls.update();
+    }
+
+    document.getElementById('cam-persp').addEventListener('click', () => setCamera('persp'));
+    document.getElementById('cam-elev').addEventListener('click', () => setCamera('elev'));
+    document.getElementById('cam-top').addEventListener('click', () => setCamera('top'));
+    document.getElementById('cam-stud').addEventListener('click', () => setCamera('stud'));
+
+    // Top View Mode Tabs (Split / 3D / 2D Elevation / 2D Fabrication / 2D Installation)
+    const pane2D = document.getElementById('pane-2d');
+    document.querySelectorAll('.view-tabs .tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.view-tabs .tab-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const v = btn.dataset.view;
+
+        if (v === 'split') {
+          pane3D.classList.remove('hidden');
+          pane2D.classList.remove('hidden');
+        } else if (v === '3d') {
+          pane3D.classList.remove('hidden');
+          pane2D.classList.add('hidden');
+        } else {
+          pane3D.classList.add('hidden');
+          pane2D.classList.remove('hidden');
+          state.activeSheet = v;
+        }
+        setTimeout(() => {
+          resizeViewports();
+          update2DAndMetrics();
+        }, 20);
+      });
+    });
+
+    // 2D Sheet Sub-Tabs
+    document.getElementById('sheet-btn-elev').addEventListener('click', () => {
+      state.activeSheet = 'elevation';
+      update2DAndMetrics();
+    });
+    document.getElementById('sheet-btn-fab').addEventListener('click', () => {
+      state.activeSheet = 'fabrication';
+      update2DAndMetrics();
+    });
+    document.getElementById('sheet-btn-inst').addEventListener('click', () => {
+      state.activeSheet = 'installation';
+      update2DAndMetrics();
+    });
+    document.getElementById('sel-panel-idx').addEventListener('change', (e) => {
+      state.selectedPanelIdx = parseInt(e.target.value, 10) || 0;
+      state.activeSheet = 'fabrication';
+      update2DAndMetrics();
+    });
+    document.getElementById('btn-toggle-cad-theme').addEventListener('click', () => {
+      state.cadTheme = state.cadTheme === 'dark' ? 'light' : 'dark';
+      update2DAndMetrics();
+    });
+
+    // Building & Staircase Typology Cards
+    document.querySelectorAll('.preset-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.preset-card').forEach((c) => c.classList.remove('active'));
+        card.classList.add('active');
+        const p = card.dataset.preset;
+        const curvedBox = document.getElementById('curved-controls');
+
+        if (p === 'straight_house') {
+          state.stairType = 'straight';
+          state.buildingEnv = 'duplex_house';
+          curvedBox.classList.add('hidden');
+        } else if (p === 'rounded_complex') {
+          state.stairType = 'rounded';
+          state.buildingEnv = 'commercial_complex';
+          curvedBox.classList.remove('hidden');
+        } else if (p === 'mall_atrium') {
+          state.stairType = 'mall_atrium';
+          state.buildingEnv = 'shopping_mall';
+          curvedBox.classList.add('hidden');
+        } else if (p === 'duplex_u') {
+          state.stairType = 'duplex_u';
+          state.buildingEnv = 'split_penthouse';
+          curvedBox.classList.add('hidden');
+        }
+        rebuildAll();
+      });
+    });
+
+    // Parametric Sliders Binding
+    function bindSliders() {
+      const sync = () => {
+        state.numSteps = parseInt(document.getElementById('inp-steps').value, 10);
+        state.tread = parseFloat(document.getElementById('inp-tread').value);
+        state.riser = parseFloat(document.getElementById('inp-riser').value);
+        state.stairWidth = parseFloat(document.getElementById('inp-width').value);
+        state.railHeight = parseFloat(document.getElementById('inp-rail').value);
+        state.glassThick = parseFloat(document.getElementById('inp-thick').value);
+        state.studProj = parseFloat(document.getElementById('inp-stud').value);
+        state.stepsPerPanel = parseInt(document.getElementById('inp-spp').value, 10);
+        state.curveRadius = parseFloat(document.getElementById('inp-radius').value);
+        state.curveAngle = parseFloat(document.getElementById('inp-angle').value);
+        state.clientName = document.getElementById('inp-client').value;
+        state.projectLocation = document.getElementById('inp-location').value;
+        state.showBuilding = document.getElementById('chk-building-mesh').checked;
+        state.showUploadedOverlay = document.getElementById('chk-3d-overlay').checked;
+
+        document.getElementById('lbl-steps').textContent = `${state.numSteps} Steps`;
+        document.getElementById('lbl-tread-riser').textContent = `${state.tread} × ${state.riser} mm`;
+        document.getElementById('lbl-width').textContent = `${state.stairWidth} mm`;
+        document.getElementById('lbl-rail').textContent = `${state.railHeight} mm`;
+        document.getElementById('lbl-thick').textContent = `${state.glassThick} mm`;
+        document.getElementById('lbl-stud').textContent = `${state.studProj} mm`;
+        document.getElementById('lbl-spp').textContent = `${state.stepsPerPanel} Steps/Panel`;
+        document.getElementById('lbl-radius').textContent = `${state.curveRadius} mm`;
+        document.getElementById('lbl-angle').textContent = `${state.curveAngle}°`;
+
+        rebuildAll();
+      };
+
+      [
+        'inp-steps', 'inp-tread', 'inp-riser', 'inp-width', 'inp-rail',
+        'inp-thick', 'inp-stud', 'inp-spp', 'inp-radius', 'inp-angle',
+        'inp-client', 'inp-location', 'chk-building-mesh', 'chk-3d-overlay'
+      ].forEach((id) => {
+        document.getElementById(id).addEventListener('input', sync);
+      });
+    }
+    bindSliders();
+
+    // 1. Upload CAD Image / PDF Drawing Handler (Auto-Extracts & Updates 3D + 2D)
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-upload');
+    const previewBox = document.getElementById('upload-preview-box');
+    const previewImg = document.getElementById('upload-preview-img');
+    const statusBadge = document.getElementById('upload-status-badge');
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleUploadedFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) handleUploadedFile(e.target.files[0]);
+    });
+
+    document.getElementById('btn-load-sample-cad').addEventListener('click', () => {
+      const sampleUrl = './assets/cad_700029_reference.png';
+      previewImg.src = sampleUrl;
+      previewBox.style.display = 'block';
+      statusBadge.style.display = 'block';
+      statusBadge.textContent = '✓ Loaded CAD Drawing #700029 — 3D & 2D Synced!';
+      const texLoader = new THREE.TextureLoader();
+      state.uploadedTexture = texLoader.load(sampleUrl, () => {
+        document.getElementById('chk-3d-overlay').checked = true;
+        state.showUploadedOverlay = true;
+        rebuildAll();
+      });
+    });
+
+    function handleUploadedFile(file) {
+      const nameLower = file.name.toLowerCase();
+      statusBadge.style.display = 'block';
+      statusBadge.textContent = `✓ Parsed "${file.name}" — 3D Staircase & 2D Fabrication Sheets Updated!`;
+
+      // Smart CAD heuristic detection from filename or image aspect
+      if (nameLower.includes('curve') || nameLower.includes('round') || nameLower.includes('spiral')) {
+        document.querySelector('[data-preset="rounded_complex"]').click();
+      } else if (nameLower.includes('mall') || nameLower.includes('commercial')) {
+        document.querySelector('[data-preset="mall_atrium"]').click();
+      } else if (nameLower.includes('duplex') || nameLower.includes('landing')) {
+        document.querySelector('[data-preset="duplex_u"]').click();
+      }
+
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          previewImg.src = ev.target.result;
+          previewBox.style.display = 'block';
+
+          const texLoader = new THREE.TextureLoader();
+          state.uploadedTexture = texLoader.load(ev.target.result, () => {
+            document.getElementById('chk-3d-overlay').checked = true;
+            state.showUploadedOverlay = true;
+            rebuildAll();
+          });
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // PDF or DXF uploaded
+        previewBox.style.display = 'none';
+        rebuildAll();
+      }
+    }
+
+    // Export Buttons (2D DXF, 2D PNG, 3D OBJ, 3ds Max .MS)
+    document.getElementById('btn-export-dxf').addEventListener('click', () => {
+      const dxfContent = generateAutoCADDXF(state);
+      const blob = new Blob([dxfContent], { type: 'application/dxf' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `GlassWings_2D_Elevation_And_Fabrication_${state.drawingNo}.dxf`;
+      a.click();
+    });
+
+    document.getElementById('btn-export-png').addEventListener('click', () => {
+      const cadCanvas = document.getElementById('cad-canvas');
+      const a = document.createElement('a');
+      a.href = cadCanvas.toDataURL('image/png');
+      a.download = `GlassWings_2D_${state.activeSheet.toUpperCase()}_${state.drawingNo}.png`;
+      a.click();
+    });
+
+    document.getElementById('btn-export-pdf').addEventListener('click', () => {
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = 1280;
+      offCanvas.height = 820;
+
+      renderElevationCanvas(offCanvas, state, 'light');
+      const imgElev = offCanvas.toDataURL('image/png');
+
+      renderFabricationCanvas(offCanvas, state, state.selectedPanelIdx);
+      const imgFab = offCanvas.toDataURL('image/png');
+
+      renderInstallationCanvas(offCanvas, state);
+      const imgInst = offCanvas.toDataURL('image/png');
+
+      const win = window.open('', '_blank');
+      if (win) {
+        win.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Glass Wings Studio — 2D Elevation, CNC Glass Fabrication & Installation Package (#${state.drawingNo})</title>
+            <style>
+              body { margin: 0; padding: 20px; font-family: Arial, sans-serif; background: #f8fafc; color: #0f172a; }
+              .page { page-break-after: always; margin-bottom: 24px; background: #fff; padding: 12px; border: 1px solid #cbd5e1; }
+              .page:last-child { page-break-after: auto; }
+              img { width: 100%; height: auto; display: block; }
+              h2 { font-size: 16px; margin: 0 0 8px 0; color: #0284c7; }
+              @media print { body { padding: 0; background: #fff; } .page { border: none; padding: 0; margin: 0; } }
+            </style>
+          </head>
+          <body>
+            <div class="page"><h2>SHEET 1/3: 2D CAD ELEVATION & SECTION VIEW (DRAWING #${state.drawingNo})</h2><img src="${imgElev}"/></div>
+            <div class="page"><h2>SHEET 2/3: 2D CNC GLASS FABRICATION & HOLE DRILLING SHEET</h2><img src="${imgFab}"/></div>
+            <div class="page"><h2>SHEET 3/3: 2D SITE INSTALLATION BLUEPRINT & BILL OF QUANTITIES (BOQ)</h2><img src="${imgInst}"/></div>
+            <script>window.onload = () => setTimeout(() => window.print(), 400);<\/script>
+          </body>
+          </html>
+        `);
+        win.document.close();
+      }
+    });
+
+    document.getElementById('btn-export-obj').addEventListener('click', () => {
+      const exporter = new OBJExporter();
+      const objStr = exporter.parse(stairGroup);
+      const blob = new Blob([objStr], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `GlassWings_3D_${state.stairType}_Staircase.obj`;
+      a.click();
+    });
+
+    document.getElementById('btn-export-ms').addEventListener('click', () => {
+      const msCode = generateDynamicMaxScript(state);
+      const blob = new Blob([msCode], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `GlassWings_Custom_${state.stairType}_3dsMax.ms`;
+      a.click();
+    });
+
+    // Initial Boot
+    resizeViewports();
+    setCamera('persp');
+    rebuildAll();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
