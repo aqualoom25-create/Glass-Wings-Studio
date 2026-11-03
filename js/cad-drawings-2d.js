@@ -965,3 +965,283 @@ export function renderInstallationCanvas(canvas, state) {
     ctx.fillText(row[2], rightX + 415, ry);
   });
 }
+
+
+/**
+ * Renders Sheet 4: Manufacturer Hardware CNC Cutout & Brand Catalogue Datasheet
+ * Supports Dorma / Shivalik / Ozone / Kich / Hafele / Q-railing / Kinlong / CRL Cutouts:
+ *  - 1" & 2" Counterbore Projection Studs
+ *  - PT-10 / PT-20 / PT-30 Patch Fitting Corner Cutouts (165 x 54 mm + R15 + 2xØ15)
+ *  - US-10 Center Patch Lock Cutouts (142 x 82 mm + 2xØ16)
+ *  - 90° / 180° Hinge Mouse-Ear Cutouts (90 x 55 mm + 2xØ16)
+ *  - 4-Way Spider Routel Countersunk Holes (Ø22 / Ø36 mm)
+ *  - Square Deck Spigot & Baluster D-Clamp Notches
+ */
+export function renderHardwareCutoutCanvas(canvas, state, activeSkuItem) {
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width;
+  const H = canvas.height;
+
+  ctx.fillStyle = "#060c16";
+  ctx.fillRect(0, 0, W, H);
+
+  // Fine engineering millimeter grid
+  ctx.strokeStyle = "rgba(56, 189, 248, 0.08)";
+  ctx.lineWidth = 1;
+  for (let x = 0; x < W; x += 28) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (let y = 0; y < H; y += 28) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  const item = activeSkuItem || {
+    sku: "SHV-PS-1001",
+    brandName: "Shivalik Architectural",
+    familyTitle: "1\" (25.4mm) Side-Mount Projection Stud (Point Standoff)",
+    cutoutType: "counterbore_hole",
+    holeDiaMm: 18,
+    counterboreDiaMm: 26,
+    notchWidthMm: 165,
+    notchHeightMm: 54,
+    edgeDistX: 82,
+    edgeDistY: 75,
+    finishName: "SS 304 Satin Brushed",
+    specSummary: "Ø50mm Cap × 25.4mm (1\") Standoff Barrel, M10×110 Chemical Anchor, EPDM Gaskets."
+  };
+
+  // Header Banner
+  ctx.fillStyle = "#f59e0b";
+  ctx.font = "bold 18px 'Segoe UI', sans-serif";
+  ctx.textAlign = "left";
+  ctx.fillText(
+    `GLAZING HARDWARE CATALOGUE & CNC GLASS CUTOUT DETAIL — [${item.sku}]`,
+    28,
+    38
+  );
+  ctx.fillStyle = "#e2e8f0";
+  ctx.font = "bold 14px 'Segoe UI', sans-serif";
+  ctx.fillText(`${item.brandName}  •  ${item.familyTitle}  •  Finish: ${item.finishName}`, 28, 62);
+  ctx.fillStyle = "#94a3b8";
+  ctx.font = "12px 'Segoe UI', sans-serif";
+  ctx.fillText(item.specSummary, 28, 84);
+
+  // Left Box: 1:1 / Enlarged CNC Glass Cutout Geometry Diagram
+  const boxX = 36;
+  const boxY = 108;
+  const boxW = W * 0.54;
+  const boxH = H - 140;
+
+  ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
+  ctx.strokeStyle = "rgba(56, 189, 248, 0.35)";
+  ctx.lineWidth = 1.5;
+  ctx.fillRect(boxX, boxY, boxW, boxH);
+  ctx.strokeRect(boxX, boxY, boxW, boxH);
+
+  ctx.fillStyle = "#38bdf8";
+  ctx.font = "bold 13px 'Segoe UI', sans-serif";
+  ctx.fillText("CNC GLASS FABRICATION CUTOUT GEOMETRY (ALL DIMENSIONS IN MM, TOLERANCE ±0.5MM)", boxX + 16, boxY + 26);
+
+  const cx = boxX + boxW * 0.48;
+  const cy = boxY + boxH * 0.54;
+
+  if (item.cutoutType.includes("patch_pt")) {
+    // Draw Dorma / Shivalik PT-10 / PT-20 Corner Patch Fitting CNC Cutout (165mm x 54mm + R15 + 2xØ15mm holes)
+    const gw = 420;
+    const gh = 340;
+    const nw = 220; // scaled 165mm
+    const nh = 85;  // scaled 54mm
+    const gx = cx - gw * 0.5;
+    const gy = cy - gh * 0.5;
+
+    ctx.beginPath();
+    ctx.moveTo(gx, gy);
+    ctx.lineTo(gx + gw, gy);
+    ctx.lineTo(gx + gw, gy + gh);
+    ctx.lineTo(gx + nw, gy + gh);
+    ctx.lineTo(gx + nw, gy + gh - nh);
+    ctx.arc(gx + nw - 16, gy + gh - nh, 16, 0, Math.PI * 1.5, true);
+    ctx.lineTo(gx, gy + gh - nh);
+    ctx.closePath();
+
+    ctx.fillStyle = "rgba(56, 189, 248, 0.16)";
+    ctx.fill();
+    ctx.strokeStyle = "#38bdf8";
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Two Ø15mm clamping holes inside the PT-10 / PT-20 cutout zone
+    [gx + 65, gx + 155].forEach((hx, i) => {
+      const hy = gy + gh - nh - 42;
+      ctx.beginPath();
+      ctx.arc(hx, hy, 14, 0, Math.PI * 2);
+      ctx.strokeStyle = "#fbbf24";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = "#fde68a";
+      ctx.font = "bold 11px monospace";
+      ctx.fillText(`Ø${item.holeDiaMm}mm (#${i + 1})`, hx - 28, hy - 20);
+    });
+
+    // Dimensions for PT-10 / PT-20
+    ctx.fillStyle = "#34d399";
+    ctx.font = "bold 13px monospace";
+    ctx.fillText(`Notch Length: ${item.notchWidthMm || 165} mm`, gx + 30, gy + gh + 28);
+    ctx.fillText(`Notch Height: ${item.notchHeightMm || 54} mm`, gx + nw + 16, gy + gh - nh * 0.4);
+    ctx.fillText(`Corner Relief Radius: R15 mm | Hole C-to-C: 80 mm`, gx + 20, gy - 16);
+  } else if (item.cutoutType === "patch_lock_cutout" || item.cutoutType === "hinge_mouse_ear") {
+    // Draw US-10 Center Lock or 90° Hinge Mouse-Ear Edge Cutout
+    const gw = 380;
+    const gh = 360;
+    const nw = 130;
+    const nh = 160;
+    const gx = cx - gw * 0.45;
+    const gy = cy - gh * 0.5;
+
+    ctx.beginPath();
+    ctx.moveTo(gx, gy);
+    ctx.lineTo(gx + gw, gy);
+    ctx.lineTo(gx + gw, gy + gh);
+    ctx.lineTo(gx, gy + gh);
+    ctx.lineTo(gx, cy + nh * 0.5);
+    ctx.lineTo(gx + nw, cy + nh * 0.5);
+    ctx.lineTo(gx + nw, cy - nh * 0.5);
+    ctx.lineTo(gx, cy - nh * 0.5);
+    ctx.closePath();
+
+    ctx.fillStyle = "rgba(56, 189, 248, 0.16)";
+    ctx.fill();
+    ctx.strokeStyle = "#38bdf8";
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Mouse-ear radii at inner corners
+    [cy - nh * 0.5, cy + nh * 0.5].forEach((ey) => {
+      ctx.beginPath();
+      ctx.arc(gx + nw, ey, 18, 0, Math.PI * 2);
+      ctx.strokeStyle = "#f59e0b";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+
+    ctx.fillStyle = "#34d399";
+    ctx.font = "bold 13px monospace";
+    ctx.fillText(
+      `Edge Cutout: ${item.notchWidthMm} mm × ${item.notchHeightMm} mm + 2 × Ø${item.holeDiaMm}mm Mouse-Ear Relief`,
+      gx - 15,
+      gy - 16
+    );
+  } else {
+    // Counterbore Standoff Stud / Spider Routel / Spigot / D-Clamp CNC Hole Detail
+    const gw = 420;
+    const gh = 330;
+    const gx = cx - gw * 0.5;
+    const gy = cy - gh * 0.5;
+
+    ctx.fillStyle = "rgba(56, 189, 248, 0.14)";
+    ctx.strokeStyle = "#38bdf8";
+    ctx.lineWidth = 2.4;
+    ctx.fillRect(gx, gy, gw, gh);
+    ctx.strokeRect(gx, gy, gw, gh);
+
+    // Draw Dual CNC Holes + Counterbore Rings
+    const h1X = gx + 125;
+    const h2X = gx + 295;
+    const hY = gy + gh - 95;
+
+    [h1X, h2X].forEach((hx, idx) => {
+      // Outer counterbore / cap footprint
+      ctx.beginPath();
+      ctx.arc(hx, hY, 38, 0, Math.PI * 2);
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Inner CNC through-hole
+      ctx.beginPath();
+      ctx.arc(hx, hY, 20, 0, Math.PI * 2);
+      ctx.fillStyle = "#060c16";
+      ctx.fill();
+      ctx.strokeStyle = "#fbbf24";
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Crosshairs
+      ctx.strokeStyle = "#f59e0b";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(hx - 48, hY); ctx.lineTo(hx + 48, hY);
+      ctx.moveTo(hx, hY - 48); ctx.lineTo(hx, hY + 48);
+      ctx.stroke();
+
+      ctx.fillStyle = "#fde68a";
+      ctx.font = "bold 12px monospace";
+      ctx.textAlign = "center";
+      ctx.fillText(
+        item.holeDiaMm > 0 ? `CNC Hole #${idx + 1}: Ø${item.holeDiaMm}mm` : "Dry-Glaze Wedge Clamping",
+        hx,
+        hY - 50
+      );
+      if (item.counterboreDiaMm > 0) {
+        ctx.fillStyle = "#38bdf8";
+        ctx.fillText(`Counterbore: Ø${item.counterboreDiaMm}mm`, hx, hY - 66);
+      }
+    });
+
+    // Edge distance callouts
+    ctx.fillStyle = "#34d399";
+    ctx.font = "bold 13px monospace";
+    ctx.textAlign = "left";
+    ctx.fillText(
+      `Min Edge Offset X: ${item.edgeDistX} mm | Bottom Edge Offset Y: ${item.edgeDistY} mm | Glass: ${state.glassThick}mm Toughened`,
+      gx,
+      gy - 16
+    );
+  }
+
+  // Right Box: Multi-Brand Equivalent Cross-Reference & Technical Specification Table
+  const rX = W * 0.60;
+  const rY = 108;
+  const rW = W * 0.37;
+  const rH = H - 140;
+
+  ctx.fillStyle = "rgba(15, 23, 42, 0.92)";
+  ctx.strokeStyle = "rgba(245, 158, 11, 0.4)";
+  ctx.lineWidth = 1.5;
+  ctx.fillRect(rX, rY, rW, rH);
+  ctx.strokeRect(rX, rY, rW, rH);
+
+  ctx.fillStyle = "#f59e0b";
+  ctx.font = "bold 14px 'Segoe UI', sans-serif";
+  ctx.textAlign = "left";
+  ctx.fillText("HARDWARE SPECIFICATION & BRAND CROSS-REFERENCE", rX + 16, rY + 28);
+
+  const details = [
+    ["Selected SKU Code", item.sku],
+    ["Manufacturer Brand", item.brandName],
+    ["Hardware Family", item.familyTitle.slice(0, 38)],
+    ["Surface Finish", item.finishName],
+    ["3D Mounting System", item.mountingMode.toUpperCase()],
+    ["CNC Cutout Type", item.cutoutType.toUpperCase()],
+    ["Primary Hole Diameter", item.holeDiaMm > 0 ? `Ø${item.holeDiaMm} mm (±0.5mm)` : "No Hole (Friction Channel)"],
+    ["Counterbore / Notch", item.counterboreDiaMm ? `Ø${item.counterboreDiaMm} mm` : item.notchWidthMm ? `${item.notchWidthMm} × ${item.notchHeightMm} mm` : "Standard Through-Hole"],
+    ["Edge Distance (X / Y)", `${item.edgeDistX} mm / ${item.edgeDistY} mm`],
+    ["Compatible Glass", `${state.glassThick}mm Toughened / Laminated (8–19mm)`],
+    ["Gasket Material", "2.0mm Clear UV-Stabilized EPDM / Silicone"],
+    ["Structural Grade", "AISI 304 / AISI 316 / EN 1991-1-1 Tested"],
+    ["Equivalent Brands", "Dorma • Shivalik • Ozone • Kich • Q-railing • CRL"]
+  ];
+
+  details.forEach(([k, v], idx) => {
+    const ry = rY + 60 + idx * 32;
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "12px 'Segoe UI', sans-serif";
+    ctx.fillText(k, rX + 16, ry);
+    ctx.fillStyle = "#f8fafc";
+    ctx.font = "bold 12px monospace";
+    ctx.fillText(v, rX + 180, ry);
+  });
+}

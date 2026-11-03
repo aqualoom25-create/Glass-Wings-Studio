@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glass Wings Studio — CAD-to-3D Staircase, Multi-Building Renderer & 2D Glass Fabrication Suite</title>
+  <title>Glass Wings Studio — 30 3D Buildings, Full House Ceiling/Floor Elevations & 1,080+ Brand Hardware Catalogue</title>
   <style>
     :root {
-      --bg-dark: #070b11;
-      --panel-bg: rgba(13, 20, 31, 0.92);
-      --panel-card: rgba(21, 31, 46, 0.85);
-      --border: rgba(56, 189, 248, 0.24);
+      --bg-dark: #060a10;
+      --panel-bg: rgba(11, 18, 29, 0.94);
+      --panel-card: rgba(19, 29, 44, 0.88);
+      --border: rgba(56, 189, 248, 0.25);
       --accent: #38bdf8;
       --accent-emerald: #10b981;
       --accent-amber: #f59e0b;
@@ -28,89 +28,85 @@
       flex-direction: column;
     }
 
-    /* Top Navigation & Mode Bar */
+    /* Top Bar */
     .topbar {
-      height: 62px;
+      height: 60px;
       background: var(--panel-bg);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
-      gap: 12px;
-      z-index: 20;
+      padding: 0 14px;
+      gap: 10px;
+      z-index: 30;
       flex-shrink: 0;
     }
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .brand-diamond {
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
       background: linear-gradient(135deg, #06b6d4, #2563eb);
       transform: rotate(45deg);
       border-radius: 4px;
-      box-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.5);
       flex-shrink: 0;
     }
     .brand-text h1 {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
-      letter-spacing: 0.3px;
       color: #fff;
+      letter-spacing: 0.3px;
     }
     .brand-text p {
-      font-size: 0.72rem;
+      font-size: 0.69rem;
       color: var(--text-muted);
     }
 
     .view-tabs {
       display: flex;
-      gap: 6px;
-      background: rgba(15, 23, 42, 0.9);
+      gap: 4px;
+      background: rgba(15, 23, 42, 0.92);
       padding: 4px;
-      border-radius: 10px;
+      border-radius: 9px;
       border: 1px solid rgba(148, 163, 184, 0.2);
     }
     .tab-btn {
       background: transparent;
       color: #cbd5e1;
       border: none;
-      padding: 7px 12px;
-      border-radius: 7px;
-      font-size: 0.78rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.74rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.16s ease;
+      transition: all 0.15s ease;
       white-space: nowrap;
     }
-    .tab-btn:hover {
-      color: #fff;
-      background: rgba(56, 189, 248, 0.12);
-    }
+    .tab-btn:hover { color: #fff; background: rgba(56, 189, 248, 0.12); }
     .tab-btn.active {
       background: linear-gradient(135deg, #0284c7, #2563eb);
       color: #fff;
-      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
     }
 
     .export-group {
       display: flex;
-      gap: 6px;
+      gap: 5px;
       align-items: center;
     }
     .btn {
-      background: rgba(30, 41, 59, 0.9);
+      background: rgba(30, 41, 59, 0.92);
       color: var(--text-main);
       border: 1px solid rgba(148, 163, 184, 0.28);
-      padding: 7px 11px;
+      padding: 6px 10px;
       border-radius: 7px;
-      font-size: 0.76rem;
+      font-size: 0.73rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.16s ease;
+      transition: all 0.15s ease;
       white-space: nowrap;
     }
     .btn:hover {
@@ -118,213 +114,157 @@
       background: rgba(56, 189, 248, 0.16);
       color: #fff;
     }
-    .btn-emerald {
-      background: linear-gradient(135deg, #059669, #10b981);
-      border-color: #34d399;
-      color: #fff;
-    }
-    .btn-amber {
-      background: linear-gradient(135deg, #d97706, #f59e0b);
-      border-color: #fbbf24;
-      color: #fff;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      border-color: #38bdf8;
-      color: #fff;
-    }
+    .btn-emerald { background: linear-gradient(135deg, #059669, #10b981); border-color: #34d399; color: #fff; }
+    .btn-amber { background: linear-gradient(135deg, #d97706, #f59e0b); border-color: #fbbf24; color: #fff; }
+    .btn-primary { background: linear-gradient(135deg, #0284c7, #2563eb); border-color: #38bdf8; color: #fff; }
 
-    /* Main Workspace Layout */
+    /* Workspace */
     .workspace {
       flex: 1;
       display: flex;
       overflow: hidden;
       position: relative;
     }
-
-    /* Left Engineering & Upload Sidebar */
     .sidebar {
-      width: 350px;
+      width: 375px;
       background: var(--panel-bg);
       border-right: 1px solid var(--border);
       overflow-y: auto;
-      padding: 14px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 11px;
       flex-shrink: 0;
-      z-index: 10;
+      z-index: 15;
     }
     .card {
       background: var(--panel-card);
       border: 1px solid rgba(148, 163, 184, 0.16);
-      border-radius: 10px;
-      padding: 12px;
+      border-radius: 9px;
+      padding: 11px;
     }
     .section-title {
-      font-size: 0.73rem;
+      font-size: 0.71rem;
       text-transform: uppercase;
-      letter-spacing: 0.9px;
+      letter-spacing: 0.8px;
       color: var(--accent);
       font-weight: 700;
-      margin-bottom: 9px;
+      margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    /* 1. Upload CAD Image / PDF Dropzone */
+    /* Upload Dropzone */
     .upload-zone {
       border: 1.5px dashed rgba(56, 189, 248, 0.5);
       background: rgba(15, 23, 42, 0.65);
-      border-radius: 9px;
-      padding: 12px;
+      border-radius: 8px;
+      padding: 9px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
-    .upload-zone:hover, .upload-zone.dragover {
-      border-color: #10b981;
-      background: rgba(16, 185, 129, 0.1);
-    }
-    .upload-zone h4 {
-      font-size: 0.82rem;
-      color: #e2e8f0;
-      margin-bottom: 4px;
-    }
-    .upload-zone p {
-      font-size: 0.71rem;
-      color: var(--text-muted);
-    }
+    .upload-zone:hover { border-color: #10b981; background: rgba(16, 185, 129, 0.1); }
+    .upload-zone h4 { font-size: 0.78rem; color: #e2e8f0; }
+    .upload-zone p { font-size: 0.68rem; color: var(--text-muted); margin-top: 2px; }
     .upload-preview {
-      margin-top: 8px;
+      margin-top: 6px;
       display: none;
       background: #000;
       border-radius: 6px;
       overflow: hidden;
       border: 1px solid rgba(56, 189, 248, 0.35);
-      position: relative;
     }
-    .upload-preview img, .upload-preview canvas {
-      width: 100%;
-      max-height: 120px;
-      object-fit: contain;
-      display: block;
-    }
+    .upload-preview img { width: 100%; max-height: 95px; object-fit: contain; display: block; }
     .upload-badge {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       background: rgba(16, 185, 129, 0.2);
       color: #34d399;
-      padding: 4px 8px;
+      padding: 4px 7px;
       border-radius: 5px;
-      margin-top: 6px;
+      margin-top: 5px;
       display: none;
     }
 
-    /* 2. Building & Staircase Preset Cards */
-    .preset-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px;
-    }
-    .preset-card {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      border-radius: 8px;
-      padding: 8px 9px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.16s ease;
-      color: var(--text-main);
-    }
-    .preset-card:hover {
-      border-color: var(--accent);
-    }
-    .preset-card.active {
-      background: rgba(56, 189, 248, 0.16);
-      border-color: var(--accent);
-      box-shadow: inset 0 0 8px rgba(56, 189, 248, 0.25);
-    }
-    .preset-card .t {
-      font-size: 0.77rem;
-      font-weight: 700;
+    /* Select & Inputs */
+    select.full-select, input.full-input {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.95);
       color: #fff;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 7px 9px;
+      border-radius: 7px;
+      font-size: 0.76rem;
+      margin-bottom: 7px;
+      outline: none;
     }
-    .preset-card .s {
+    .cat-pills {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 7px;
+      flex-wrap: wrap;
+    }
+    .cat-pill {
       font-size: 0.67rem;
-      color: var(--text-muted);
-      margin-top: 2px;
+      padding: 4px 7px;
+      border-radius: 5px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      color: #cbd5e1;
+      cursor: pointer;
+    }
+    .cat-pill.active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 700;
+    }
+    .bld-desc {
+      font-size: 0.7rem;
+      color: #cbd5e1;
+      background: rgba(15, 23, 42, 0.65);
+      padding: 6px 8px;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+      line-height: 1.35;
     }
 
-    /* Sliders & Inputs */
     .control-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.78rem;
-      margin-bottom: 4px;
+      font-size: 0.75rem;
+      margin-bottom: 3px;
     }
     .control-row label { color: #cbd5e1; }
-    .control-row .val {
-      color: var(--accent);
-      font-weight: 700;
-      font-family: monospace;
-    }
+    .control-row .val { color: var(--accent); font-weight: 700; font-family: monospace; }
     input[type="range"] {
       width: 100%;
       accent-color: var(--accent);
-      margin-bottom: 9px;
+      margin-bottom: 7px;
       cursor: pointer;
     }
-    .text-inputs {
+    .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 7px;
-      margin-top: 4px;
-    }
-    .text-inputs div {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .text-inputs label {
-      font-size: 0.68rem;
-      color: var(--text-muted);
-    }
-    .text-inputs input {
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.28);
-      color: #fff;
-      padding: 5px 8px;
-      border-radius: 6px;
-      font-size: 0.76rem;
-    }
-
-    /* Live Metrics Strip */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
       gap: 6px;
     }
-    .metric-box {
-      background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(148, 163, 184, 0.15);
-      border-radius: 7px;
-      padding: 7px 9px;
+    .check-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      font-size: 0.72rem;
+      margin-top: 4px;
     }
-    .metric-box .k {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-    }
-    .metric-box .v {
-      font-size: 0.84rem;
-      font-weight: 700;
-      color: #34d399;
-      margin-top: 2px;
-      font-family: monospace;
+    .check-grid label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      color: #cbd5e1;
     }
 
-    /* Viewport Content Area */
+    /* Viewport */
     .viewport-area {
       flex: 1;
       display: flex;
@@ -345,14 +285,14 @@
       background: #04070b;
       align-items: center;
       justify-content: center;
-      padding: 12px;
+      padding: 10px;
     }
     .pane-2d canvas {
       max-width: 100%;
-      max-height: calc(100% - 48px);
+      max-height: calc(100% - 44px);
       border: 1px solid rgba(56, 189, 248, 0.28);
       border-radius: 8px;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
       object-fit: contain;
     }
     .sheet-toolbar {
@@ -360,22 +300,116 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      margin-bottom: 8px;
-      padding: 0 6px;
-      gap: 8px;
+      margin-bottom: 7px;
+      gap: 6px;
+      flex-wrap: wrap;
     }
     .floating-cam-bar {
       position: absolute;
-      bottom: 14px;
-      left: 14px;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
       display: flex;
+      justify-content: space-between;
+      align-items: center;
       gap: 6px;
       flex-wrap: wrap;
       background: var(--panel-bg);
-      padding: 8px 10px;
-      border-radius: 10px;
+      padding: 7px 10px;
+      border-radius: 9px;
       border: 1px solid var(--border);
       z-index: 12;
+    }
+
+    /* 1,080+ SKU Hardware Brand Catalogue Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 14, 0.82);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-box {
+      width: 100%;
+      max-width: 1180px;
+      height: 85vh;
+      background: #0b1320;
+      border: 1px solid var(--accent);
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+    }
+    .modal-header {
+      padding: 14px 20px;
+      background: #0f172a;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-filters {
+      padding: 12px 20px;
+      background: rgba(15, 23, 42, 0.7);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .sku-grid {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+      gap: 12px;
+      align-content: start;
+    }
+    .sku-card {
+      background: rgba(21, 31, 48, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 9px;
+      padding: 11px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+    .sku-card:hover {
+      border-color: var(--accent-amber);
+      transform: translateY(-2px);
+    }
+    .sku-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+    }
+    .sku-code {
+      font-family: monospace;
+      font-weight: 700;
+      color: var(--accent-amber);
+      background: rgba(245, 158, 11, 0.14);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .sku-brand { color: var(--accent); font-weight: 700; }
+    .sku-title { font-size: 0.8rem; font-weight: 700; color: #fff; }
+    .sku-spec { font-size: 0.69rem; color: var(--text-muted); line-height: 1.35; }
+    .sku-cutout-tag {
+      font-size: 0.68rem;
+      font-family: monospace;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.12);
+      padding: 4px 6px;
+      border-radius: 4px;
     }
     .hidden { display: none !important; }
   </style>
@@ -389,30 +423,32 @@
   </script>
 </head>
 <body>
-  <!-- TOP NAVIGATION & VIEW MODE BAR -->
+  <!-- TOP BAR -->
   <div class="topbar">
     <div class="brand">
       <div class="brand-diamond"></div>
       <div class="brand-text">
-        <h1>GLASS WINGS STUDIO — CAD-TO-3D & 2D FABRICATION SUITE</h1>
-        <p>Upload CAD/PDF • Multi-Building 3D Models (Duplex, Rounded Complex, Shopping Mall) • 2D Elevation, CNC Glass & Installation Exports</p>
+        <h1>GLASS WINGS STUDIO — 30 3D BUILDINGS & 1,080+ GLAZING HARDWARE SUITE</h1>
+        <p>Full 3D Houses, Ceiling Lights & Elevations • Dorma / Shivalik / Ozone / Kich Catalogues • 2D CNC Glass Cutouts & 3ds Max Exports</p>
       </div>
     </div>
 
     <div class="view-tabs">
-      <button class="tab-btn active" data-view="split">🔲 Split View (3D + Live 2D CAD)</button>
-      <button class="tab-btn" data-view="3d">🎮 Full 3D Building Render</button>
-      <button class="tab-btn" data-view="elevation">📐 2D CAD Elevation (#700029)</button>
-      <button class="tab-btn" data-view="fabrication">🪟 2D CNC Glass Fabrication</button>
-      <button class="tab-btn" data-view="installation">🔧 2D Site Installation & BOQ</button>
+      <button class="tab-btn active" data-view="split">🔲 Split (3D + 2D CAD)</button>
+      <button class="tab-btn" data-view="3d">🏠 Full 3D Building</button>
+      <button class="tab-btn" data-view="elevation">📐 2D Elevation</button>
+      <button class="tab-btn" data-view="fabrication">🪟 2D Glass Cut-Sheet</button>
+      <button class="tab-btn" data-view="cutout">🔩 2D Brand Cutout</button>
+      <button class="tab-btn" data-view="installation">🔧 2D Install & BOQ</button>
     </div>
 
     <div class="export-group">
-      <button class="btn btn-amber" id="btn-export-dxf" title="Download AutoCAD .DXF with 2D Elevation + Glass Cut Sheets">⬇ 2D AutoCAD (.DXF)</button>
-      <button class="btn" id="btn-export-png" title="Download High-Res 2D Engineering Sheet (.PNG)">⬇ 2D Sheet (.PNG)</button>
-      <button class="btn" id="btn-export-pdf" title="Print / Save Complete 2D Fabrication, Elevation & Installation PDF">🖨 2D PDF Report</button>
-      <button class="btn btn-emerald" id="btn-export-obj" title="Download 3D Mesh (.OBJ) for 3ds Max / Blender">⬇ 3D Model (.OBJ)</button>
-      <button class="btn btn-primary" id="btn-export-ms" title="Download Custom Parameterized 3ds Max Script (.MS)">⬇ 3ds Max Script (.MS)</button>
+      <button class="btn btn-amber" id="btn-open-catalog">📚 1,080+ Hardware Catalogue (Dorma/Shivalik)</button>
+      <button class="btn" id="btn-export-dxf">⬇ 2D .DXF</button>
+      <button class="btn" id="btn-export-png">⬇ 2D .PNG</button>
+      <button class="btn" id="btn-export-pdf">🖨 2D PDF Package</button>
+      <button class="btn btn-emerald" id="btn-export-obj">⬇ 3D .OBJ</button>
+      <button class="btn btn-primary" id="btn-export-ms">⬇ 3ds Max .MS</button>
     </div>
   </div>
 
@@ -420,181 +456,213 @@
   <div class="workspace">
     <!-- LEFT SIDEBAR -->
     <div class="sidebar">
-      <!-- 1. UPLOAD ANY CAD IMAGE OR PDF TO CREATE 3D STAIRCASE -->
+      <!-- 1. UPLOAD CAD IMAGE OR PDF -->
       <div class="card">
         <div class="section-title">
-          <span>1. Upload CAD Image / PDF Drawing</span>
-          <span style="color:#10b981;font-size:0.68rem;">Auto-3D</span>
+          <span>1. Upload Any CAD Image or Drawing PDF</span>
+          <button class="btn" id="btn-load-sample-cad" style="padding:2px 7px;font-size:0.66rem;">Load CAD #700029</button>
         </div>
         <input type="file" id="file-upload" accept="image/*,.pdf,.dxf" style="display:none;" />
         <div class="upload-zone" id="drop-zone">
-          <h4>📤 Upload Staircase Image or Drawing PDF</h4>
-          <p>Drop PNG, JPG, WEBP, PDF or DXF to extract dimensions & build 3D staircase</p>
+          <h4>📤 Upload Staircase Drawing (PNG / JPG / PDF / DXF)</h4>
+          <p>Auto-generates 3D staircase inside selected building + 2D fabrication sheets</p>
         </div>
         <div class="upload-preview" id="upload-preview-box">
           <img id="upload-preview-img" alt="Uploaded CAD Preview" />
         </div>
         <div class="upload-badge" id="upload-status-badge"></div>
-        <div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;gap:6px;">
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:#cbd5e1;">
-            <input type="checkbox" id="chk-3d-overlay" /> Show Drawing Plane in 3D
-          </label>
-          <button class="btn" id="btn-load-sample-cad" style="padding:4px 8px;font-size:0.7rem;">Load CAD #700029</button>
+      </div>
+
+      <!-- 2. 30 COMPLETE 3D ARCHITECTURAL BUILDINGS -->
+      <div class="card">
+        <div class="section-title">
+          <span>2. Select 3D Building (30 Full Models)</span>
+          <span style="color:#10b981;font-size:0.67rem;">Floors + Ceiling Lights</span>
+        </div>
+        <div class="cat-pills">
+          <span class="cat-pill active" data-cat="ALL">All (30)</span>
+          <span class="cat-pill" data-cat="Duplex Houses">Duplex Houses (10)</span>
+          <span class="cat-pill" data-cat="Shopping Malls & Complexes">Malls & Complexes (10)</span>
+          <span class="cat-pill" data-cat="Residential & Corporate Offices">Offices & Towers (10)</span>
+        </div>
+        <select id="sel-building" class="full-select"></select>
+        <div class="bld-desc" id="bld-desc-box"></div>
+
+        <div class="grid-2" style="margin-top:8px;">
+          <div>
+            <label style="font-size:0.67rem;color:var(--text-muted);">Ceiling Lighting System</label>
+            <select id="sel-ceiling-lights" class="full-select" style="margin-bottom:0;">
+              <option value="chandelier_cove">✨ Ring Chandelier + LED Cove</option>
+              <option value="recessed_grid">💡 Recessed Downlights Grid</option>
+              <option value="linear_led">📏 Linear Architectural LED Strips</option>
+              <option value="pendant_cluster">🔮 Designer Pendant Cluster</option>
+              <option value="skylight_atrium">☀️ Atrium Glass Skylight + Spots</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.67rem;color:var(--text-muted);">Building Wall / Elevation</label>
+            <select id="sel-facade" class="full-select" style="margin-bottom:0;">
+              <option value="duplex_window">🏠 Duplex House Window + Door</option>
+              <option value="curtain_glass">🏢 Curtain Wall + Patch Doors</option>
+              <option value="mall_storefronts">🏬 Shopping Mall Storefronts</option>
+              <option value="office_partitions">💼 Frameless Office Partitions</option>
+              <option value="arched_villa">🏛️ Arched Luxury Villa Elevation</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="check-grid">
+          <label><input type="checkbox" id="chk-building-mesh" checked /> Full House Floors & Walls</label>
+          <label><input type="checkbox" id="chk-ceiling-slab" checked /> Ceiling Slab & Lights</label>
+          <label><input type="checkbox" id="chk-front-elevation" checked /> Front Glass Elevation</label>
+          <label><input type="checkbox" id="chk-3d-overlay" /> 3D CAD Blueprint Plane</label>
         </div>
       </div>
 
-      <!-- 2. SELECT ZERO-COST PRE-MODELED 3D BUILDING & STAIRCASE TYPE -->
+      <!-- 3. GLAZING HARDWARE BRAND & MOUNTING SYSTEM -->
       <div class="card">
         <div class="section-title">
-          <span>2. 3D Building & Staircase Model</span>
-          <span style="color:#f59e0b;font-size:0.68rem;">4 Typologies</span>
+          <span>3. Glazing Hardware Brand & System</span>
+          <button class="btn btn-amber" id="btn-browse-1000" style="padding:2px 7px;font-size:0.66rem;">Browse 1,080+ SKUs</button>
         </div>
-        <div class="preset-grid">
-          <div class="preset-card active" data-preset="straight_house">
-            <div class="t">🏠 Duplex Villa (CAD #700029)</div>
-            <div class="s">Straight 15-Step + Stepped 10mm Glass</div>
+        <div class="grid-2">
+          <div>
+            <label style="font-size:0.67rem;color:var(--text-muted);">Brand Catalogue</label>
+            <select id="sel-brand" class="full-select"></select>
           </div>
-          <div class="preset-card" data-preset="rounded_complex">
-            <div class="t">🌀 Commercial Rounded</div>
-            <div class="s">Helical Curved Stair + Bent Glass</div>
-          </div>
-          <div class="preset-card" data-preset="mall_atrium">
-            <div class="t">🏬 Shopping Mall Atrium</div>
-            <div class="s">Twin Grand Stair + Multi-Floor Void</div>
-          </div>
-          <div class="preset-card" data-preset="duplex_u">
-            <div class="t">🏢 Split-Level U-Turn Duplex</div>
-            <div class="s">Double Flight + Mid-Landing Glass</div>
+          <div>
+            <label style="font-size:0.67rem;color:var(--text-muted);">3D Hardware Finish</label>
+            <select id="sel-finish" class="full-select"></select>
           </div>
         </div>
+        <label style="font-size:0.67rem;color:var(--text-muted);">Hardware Mounting & CNC Cutout Family</label>
+        <select id="sel-hardware-family" class="full-select" style="margin-bottom:4px;"></select>
+        <div id="active-sku-banner" style="font-size:0.69rem;color:#fbbf24;font-family:monospace;"></div>
       </div>
 
-      <!-- 3. PARAMETRIC DIMENSIONS (AUTO-UPDATES 2D & 3D) -->
+      <!-- 4. PARAMETRIC STAIRCASE & GLASS DIMENSIONS -->
       <div class="card">
         <div class="section-title">
-          <span>3. Parametric Dimensions (mm)</span>
-          <span style="color:#38bdf8;font-size:0.68rem;">2D + 3D Sync</span>
+          <span>4. Parametric Dimensions (mm)</span>
+          <span style="color:#38bdf8;font-size:0.67rem;" id="lbl-rft-badge">53.0 Rft</span>
         </div>
 
         <div class="control-row">
-          <label>Number of Steps (Per Flight)</label>
-          <span class="val" id="lbl-steps">15 Steps</span>
+          <label>Steps (Per Flight) & Width</label>
+          <span class="val" id="lbl-steps">15 Steps | 1150 mm</span>
         </div>
-        <input type="range" id="inp-steps" min="6" max="22" step="1" value="15" />
+        <div class="grid-2">
+          <input type="range" id="inp-steps" min="6" max="22" step="1" value="15" />
+          <input type="range" id="inp-width" min="900" max="2400" step="50" value="1150" />
+        </div>
 
         <div class="control-row">
           <label>Step Tread × Riser (mm)</label>
           <span class="val" id="lbl-tread-riser">275 × 165 mm</span>
         </div>
-        <div style="display:flex;gap:6px;">
-          <input type="range" id="inp-tread" min="220" max="360" step="5" value="275" title="Tread Depth (mm)" />
-          <input type="range" id="inp-riser" min="135" max="200" step="5" value="165" title="Riser Height (mm)" />
+        <div class="grid-2">
+          <input type="range" id="inp-tread" min="220" max="350" step="5" value="275" />
+          <input type="range" id="inp-riser" min="135" max="200" step="5" value="165" />
         </div>
 
         <div class="control-row">
-          <label>Staircase Width (mm)</label>
-          <span class="val" id="lbl-width">1150 mm</span>
+          <label>Railing Height & Glass Thickness</label>
+          <span class="val" id="lbl-rail-thick">915 mm | 10 mm Glass</span>
         </div>
-        <input type="range" id="inp-width" min="900" max="2400" step="50" value="1150" />
+        <div class="grid-2">
+          <input type="range" id="inp-rail" min="800" max="1150" step="5" value="915" />
+          <input type="range" id="inp-thick" min="8" max="19" step="1" value="10" />
+        </div>
 
         <div class="control-row">
-          <label>Glass Railing Height (mm)</label>
-          <span class="val" id="lbl-rail">915 mm</span>
+          <label>1" Stud Offset & Steps/Panel</label>
+          <span class="val" id="lbl-stud-spp">25.4 mm | 5 Steps/Panel</span>
         </div>
-        <input type="range" id="inp-rail" min="800" max="1150" step="5" value="915" />
-
-        <div class="control-row">
-          <label>Toughened Glass Thickness</label>
-          <span class="val" id="lbl-thick">10 mm</span>
+        <div class="grid-2">
+          <input type="range" id="inp-stud" min="15" max="55" step="0.5" value="25.4" />
+          <input type="range" id="inp-spp" min="3" max="7" step="1" value="5" />
         </div>
-        <input type="range" id="inp-thick" min="8" max="19" step="1" value="10" />
-
-        <div class="control-row">
-          <label>1" Projection Stud Offset</label>
-          <span class="val" id="lbl-stud">25.4 mm</span>
-        </div>
-        <input type="range" id="inp-stud" min="15" max="50" step="0.5" value="25.4" />
-
-        <div class="control-row">
-          <label>Steps Per Glass Panel</label>
-          <span class="val" id="lbl-spp">5 Steps/Panel</span>
-        </div>
-        <input type="range" id="inp-spp" min="3" max="7" step="1" value="5" />
 
         <div id="curved-controls" class="hidden">
           <div class="control-row">
-            <label>Helical Inner Radius (mm)</label>
-            <span class="val" id="lbl-radius">2200 mm</span>
+            <label>Helical Radius & Sweep Angle</label>
+            <span class="val" id="lbl-curve">R: 2200mm | 140°</span>
           </div>
-          <input type="range" id="inp-radius" min="1400" max="3800" step="100" value="2200" />
-
-          <div class="control-row">
-            <label>Curve Sweep Angle (°)</label>
-            <span class="val" id="lbl-angle">140°</span>
-          </div>
-          <input type="range" id="inp-angle" min="60" max="270" step="5" value="140" />
-        </div>
-
-        <div class="text-inputs">
-          <div>
-            <label>Client Name (Title Block)</label>
-            <input type="text" id="inp-client" value="Mr. Sundar" />
-          </div>
-          <div>
-            <label>Location / Site</label>
-            <input type="text" id="inp-location" value="Kovilancherry, Chennai" />
+          <div class="grid-2">
+            <input type="range" id="inp-radius" min="1400" max="3600" step="50" value="2200" />
+            <input type="range" id="inp-angle" min="60" max="240" step="5" value="140" />
           </div>
         </div>
-      </div>
 
-      <!-- 4. LIVE FABRICATION & BOQ METRICS -->
-      <div class="card">
-        <div class="section-title">
-          <span>4. Live Glass & Hardware BOQ</span>
-        </div>
-        <div class="metrics-grid">
-          <div class="metric-box"><div class="k">TOTAL RUNNING FEET</div><div class="v" id="m-rft">53.0 Rft</div></div>
-          <div class="metric-box"><div class="k">GLASS PANELS</div><div class="v" id="m-panels">4 Nos</div></div>
-          <div class="metric-box"><div class="k">TOTAL GLASS AREA</div><div class="v" id="m-area">48.5 Sq.Ft</div></div>
-          <div class="metric-box"><div class="k">1" SS 304 STUDS</div><div class="v" id="m-studs">16 Sets</div></div>
+        <div class="grid-2" style="margin-top:4px;">
+          <input type="text" id="inp-client" class="full-input" value="Mr. Sundar" placeholder="Client Name" style="margin-bottom:0;" />
+          <input type="text" id="inp-location" class="full-input" value="Kovilancherry, Chennai" placeholder="Site Location" style="margin-bottom:0;" />
         </div>
       </div>
     </div>
 
-    <!-- CENTER / RIGHT VIEWPORT AREA (3D + 2D) -->
+    <!-- RIGHT / CENTER VIEWPORT AREA -->
     <div class="viewport-area">
       <!-- 3D WebGL Pane -->
       <div class="pane-3d" id="pane-3d">
         <div class="floating-cam-bar">
-          <button class="btn" id="cam-persp">🏠 3D Building Perspective</button>
-          <button class="btn" id="cam-elev">📐 Side Elevation Camera</button>
-          <button class="btn" id="cam-top">🔼 Atrium Top Orbit</button>
-          <button class="btn" id="cam-stud">🔩 1" Stud & Holder Close-Up</button>
-          <label style="display:flex;align-items:center;gap:5px;font-size:0.75rem;margin-left:6px;cursor:pointer;">
-            <input type="checkbox" id="chk-building-mesh" checked /> Show 3D Building Interior
-          </label>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            <button class="btn" id="cam-persp">🏠 Full House Interior</button>
+            <button class="btn" id="cam-ceiling">✨ Ceiling Lights & Atrium</button>
+            <button class="btn" id="cam-facade">🏢 Building Front Elevation</button>
+            <button class="btn" id="cam-elev">📐 Stair Side Elevation</button>
+            <button class="btn" id="cam-stud">🔩 Hardware & Stud Close-Up</button>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:0.73rem;">
+            <label style="cursor:pointer;display:flex;align-items:center;gap:4px;">
+              <span>Light Intensity:</span>
+              <input type="range" id="inp-exposure" min="0.5" max="2.2" step="0.05" value="1.2" style="width:75px;margin:0;" />
+            </label>
+          </div>
         </div>
       </div>
 
       <!-- 2D Engineering CAD Pane -->
       <div class="pane-2d" id="pane-2d">
         <div class="sheet-toolbar">
-          <div style="display:flex;gap:6px;align-items:center;">
-            <button class="btn" id="sheet-btn-elev">📐 Sheet 1: 2D CAD Elevation (#700029)</button>
-            <button class="btn" id="sheet-btn-fab">🪟 Sheet 2: 2D Glass Fabrication Cut-Sheet</button>
-            <button class="btn" id="sheet-btn-inst">🔧 Sheet 3: 2D Installation & BOQ</button>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            <button class="btn" id="sheet-btn-elev">📐 Sheet 1: 2D Elevation (#700029)</button>
+            <button class="btn" id="sheet-btn-fab">🪟 Sheet 2: 2D CNC Glass Cut-Sheet</button>
+            <button class="btn" id="sheet-btn-cutout">🔩 Sheet 3: Brand Hardware Cutout</button>
+            <button class="btn" id="sheet-btn-inst">🔧 Sheet 4: Site Install & BOQ</button>
           </div>
-          <div style="display:flex;gap:6px;align-items:center;">
-            <select id="sel-panel-idx" class="btn" style="background:#0f172a;">
-              <option value="0">Panel G-01 (Top Steps)</option>
-              <option value="1">Panel G-02 (Mid Steps)</option>
-              <option value="2">Panel G-03 (Bottom Steps)</option>
-            </select>
-            <button class="btn" id="btn-toggle-cad-theme">🌗 CAD Theme (Black/White)</button>
+          <div style="display:flex;gap:5px;align-items:center;">
+            <select id="sel-panel-idx" class="btn" style="background:#0f172a;"></select>
+            <button class="btn" id="btn-toggle-cad-theme">🌗 Theme</button>
           </div>
         </div>
         <canvas id="cad-canvas" width="1280" height="820"></canvas>
       </div>
+    </div>
+  </div>
+
+  <!-- 1,080+ SKU GLAZING & GLASS HARDWARE CATALOGUE MODAL -->
+  <div class="modal-backdrop hidden" id="catalog-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h2 style="font-size:1.05rem;color:#fff;">📚 Architectural Glazing & Glass Hardware Master Catalogue (1,080 SKUs)</h2>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">
+            Official Specifications & CNC Glass Cutouts from dormakaba (Dorma), Shivalik, Ozone, Kich, Häfele, ENOX, Q-railing, CRL, Kinlong, Godrej, GEZE, Saint-Gobain & AIS
+          </p>
+        </div>
+        <button class="btn btn-amber" id="btn-close-catalog">✕ Close Catalogue</button>
+      </div>
+
+      <div class="modal-filters">
+        <input type="text" id="cat-search" class="full-input" placeholder="🔍 Search SKU, Dorma PT-10, Shivalik 1&quot; Stud, Spider, Spigot, U-Channel..." style="margin:0;" />
+        <select id="cat-filter-brand" class="full-select" style="margin:0;"></select>
+        <select id="cat-filter-family" class="full-select" style="margin:0;"></select>
+        <select id="cat-filter-finish" class="full-select" style="margin:0;"></select>
+        <span id="cat-count-label" style="font-size:0.78rem;color:#34d399;font-weight:700;font-family:monospace;">1,080 SKUs</span>
+      </div>
+
+      <div class="sku-grid" id="sku-grid-container"></div>
     </div>
   </div>
 
@@ -604,17 +672,28 @@
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     import { OBJExporter } from 'three/addons/exporters/OBJExporter.js';
     import {
+      BUILDING_CATALOG,
+      HARDWARE_BRANDS,
+      HARDWARE_FAMILIES,
+      HARDWARE_FINISHES,
+      getFullHardwareCatalog
+    } from './js/catalog-database.js';
+    import {
       computeEngineeringMetrics,
       renderElevationCanvas,
       renderFabricationCanvas,
-      renderInstallationCanvas
+      renderInstallationCanvas,
+      renderHardwareCutoutCanvas
     } from './js/cad-drawings-2d.js';
     import { generateAutoCADDXF, generateDynamicMaxScript } from './js/dxf-ms-exporter.js';
 
+    const FULL_CATALOG = getFullHardwareCatalog();
+
     // Application State
     const state = {
-      stairType: 'straight',        // 'straight' | 'rounded' | 'mall_atrium' | 'duplex_u'
-      buildingEnv: 'duplex_house',  // 'duplex_house' | 'commercial_complex' | 'shopping_mall' | 'split_penthouse'
+      buildingId: 'BLD-01',
+      stairType: 'straight',
+      buildingEnv: 'duplex_house',
       numSteps: 15,
       tread: 275,
       riser: 165,
@@ -627,64 +706,136 @@
       stepsPerPanel: 5,
       curveRadius: 2200,
       curveAngle: 140,
+      hardwareMode: 'stud_side',       // 'stud_side' | 'spigot_bottom' | 'uchannel_base' | 'post_clamp' | 'spider_point'
+      ceilingLightType: 'chandelier_cove',
+      floorStyle: 'italian_marble',
+      wallStyle: 'warm_ivory',
+      facadeType: 'duplex_window',
+      brandId: 'shivalik',
+      familyId: 'stud_1inch',
+      finishId: 'ss304_brushed',
+      activeSkuItem: FULL_CATALOG[0],
       clientName: 'Mr. Sundar',
       projectLocation: 'Kovilancherry, Chennai',
       drawingNo: '700029',
-      activeSheet: 'elevation',     // 'elevation' | 'fabrication' | 'installation'
+      activeSheet: 'elevation',        // 'elevation' | 'fabrication' | 'cutout' | 'installation'
       selectedPanelIdx: 0,
       cadTheme: 'dark',
       showBuilding: true,
+      showCeilingSlab: true,
+      showFrontElevation: true,
       showUploadedOverlay: false,
       uploadedTexture: null
     };
 
-    // Setup Three.js 3D Renderer
+    // Populate Dropdowns (30 Buildings, 15 Brands, 12 Families, 6 Finishes)
+    const selBuilding = document.getElementById('sel-building');
+    function populateBuildingSelect(categoryFilter = 'ALL') {
+      const prev = selBuilding.value;
+      selBuilding.innerHTML = '';
+      const list = categoryFilter === 'ALL'
+        ? BUILDING_CATALOG
+        : BUILDING_CATALOG.filter((b) => b.category === categoryFilter);
+      list.forEach((b) => {
+        const opt = document.createElement('option');
+        opt.value = b.id;
+        opt.textContent = `${b.name} [${b.category}]`;
+        selBuilding.appendChild(opt);
+      });
+      if (list.some((b) => b.id === prev)) {
+        selBuilding.value = prev;
+      } else if (list.length) {
+        selBuilding.value = list[0].id;
+        applyBuildingPreset(list[0].id);
+      }
+    }
+
+    const selBrand = document.getElementById('sel-brand');
+    const catFilterBrand = document.getElementById('cat-filter-brand');
+    catFilterBrand.innerHTML = '<option value="ALL">All 15 Glazing Brands</option>';
+    HARDWARE_BRANDS.forEach((b) => {
+      selBrand.innerHTML += `<option value="${b.id}">${b.name}</option>`;
+      catFilterBrand.innerHTML += `<option value="${b.id}">${b.name}</option>`;
+    });
+    selBrand.value = state.brandId;
+
+    const selFinish = document.getElementById('sel-finish');
+    const catFilterFinish = document.getElementById('cat-filter-finish');
+    catFilterFinish.innerHTML = '<option value="ALL">All 6 Finishes</option>';
+    HARDWARE_FINISHES.forEach((f) => {
+      selFinish.innerHTML += `<option value="${f.id}">${f.name}</option>`;
+      catFilterFinish.innerHTML += `<option value="${f.id}">${f.name}</option>`;
+    });
+    selFinish.value = state.finishId;
+
+    const selFamily = document.getElementById('sel-hardware-family');
+    const catFilterFamily = document.getElementById('cat-filter-family');
+    catFilterFamily.innerHTML = '<option value="ALL">All 12 Hardware Families</option>';
+    HARDWARE_FAMILIES.forEach((fam) => {
+      selFamily.innerHTML += `<option value="${fam.familyId}">${fam.title}</option>`;
+      catFilterFamily.innerHTML += `<option value="${fam.familyId}">${fam.title}</option>`;
+    });
+    selFamily.value = state.familyId;
+
+    function syncActiveSkuFromSelectors() {
+      const match = FULL_CATALOG.find(
+        (item) => item.brandId === state.brandId && item.familyId === state.familyId && item.finishId === state.finishId
+      ) || FULL_CATALOG[0];
+      state.activeSkuItem = match;
+      state.hardwareMode = match.mountingMode;
+      state.studHoleDia = match.holeDiaMm || 18;
+      document.getElementById('active-sku-banner').textContent =
+        `Active SKU: ${match.sku} (${match.brandName}) • Cutout: ${match.holeDiaMm ? 'Ø' + match.holeDiaMm + 'mm' : 'Dry-Glaze Channel'}`;
+    }
+
+    // Three.js Setup
     const pane3D = document.getElementById('pane-3d');
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.2;
     pane3D.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0c131f);
+    scene.background = new THREE.Color(0x090f1a);
 
     const pmremGenerator = new THREE.PMREMGenerator(renderer);
     scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
 
-    const camera = new THREE.PerspectiveCamera(42, 1, 10, 60000);
+    const camera = new THREE.PerspectiveCamera(44, 1, 10, 75000);
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.06;
 
-    // Lights
-    scene.add(new THREE.AmbientLight(0xfff9f0, 0.6));
-    const sunLight = new THREE.DirectionalLight(0xfff5e4, 2.3);
-    sunLight.position.set(2800, 5600, 4200);
+    // Base Scene Lighting
+    scene.add(new THREE.AmbientLight(0xfff9f2, 0.65));
+    const sunLight = new THREE.DirectionalLight(0xfff5e4, 2.1);
+    sunLight.position.set(3200, 6200, 4800);
     sunLight.castShadow = true;
     sunLight.shadow.mapSize.set(2048, 2048);
-    const sd = 5500;
+    const sd = 6500;
     sunLight.shadow.camera.left = -sd;
     sunLight.shadow.camera.right = sd;
     sunLight.shadow.camera.top = sd;
     sunLight.shadow.camera.bottom = -sd;
     sunLight.shadow.camera.near = 200;
-    sunLight.shadow.camera.far = 16000;
+    sunLight.shadow.camera.far = 20000;
     sunLight.shadow.bias = -0.0005;
     scene.add(sunLight);
 
-    const warmAtriumLight = new THREE.PointLight(0xffd29d, 2.2, 9500, 1.1);
-    warmAtriumLight.position.set(0, 3200, 1200);
-    scene.add(warmAtriumLight);
+    const ceilingPointLight1 = new THREE.PointLight(0xffe0b2, 2.4, 11000, 1.1);
+    const ceilingPointLight2 = new THREE.PointLight(0xfff3e0, 2.0, 11000, 1.1);
+    scene.add(ceilingPointLight1);
+    scene.add(ceilingPointLight2);
 
-    // PBR Materials
+    // Dynamic Materials
     const glassMtl = new THREE.MeshPhysicalMaterial({
       color: 0xdcfce7,
       attenuationColor: new THREE.Color(0x6ee7b7),
       attenuationDistance: 420,
-      roughness: 0.03,
+      roughness: 0.025,
       transmission: 0.92,
       ior: 1.52,
       thickness: 22,
@@ -693,63 +844,190 @@
       opacity: 0.95,
       side: THREE.DoubleSide
     });
-    const ss304Mtl = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.96, roughness: 0.16 });
-    const woodTreadMtl = new THREE.MeshStandardMaterial({ color: 0xb4713a, roughness: 0.34, metalness: 0.05 });
-    const marbleStepMtl = new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.18, metalness: 0.05 });
-    const concreteMtl = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, roughness: 0.7 });
-    const wallMtl = new THREE.MeshStandardMaterial({ color: 0xf3f0e8, roughness: 0.8 });
-    const floorMtl = new THREE.MeshStandardMaterial({ color: 0xe2ddd5, roughness: 0.18 });
-    const accentGoldMtl = new THREE.MeshStandardMaterial({ color: 0xfbbf24, metalness: 0.85, roughness: 0.22 });
-    const edgeLineMtl = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.7 });
+    const hardwareMtl = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.95, roughness: 0.16 });
+    const treadMtl = new THREE.MeshStandardMaterial({ color: 0xb4713a, roughness: 0.32, metalness: 0.05 });
+    const concreteMtl = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, roughness: 0.68 });
+    const wallMtl = new THREE.MeshStandardMaterial({ color: 0xf4f1ea, roughness: 0.78 });
+    const floorMtl = new THREE.MeshStandardMaterial({ color: 0xe5e0d8, roughness: 0.16, metalness: 0.05 });
+    const ceilingMtl = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.85 });
+    const emissiveWarmMtl = new THREE.MeshStandardMaterial({
+      color: 0xfffbeb,
+      emissive: 0xffd584,
+      emissiveIntensity: 2.8,
+      roughness: 0.2
+    });
+    const emissiveCoolMtl = new THREE.MeshStandardMaterial({
+      color: 0xf0f9ff,
+      emissive: 0xbae6fd,
+      emissiveIntensity: 2.5,
+      roughness: 0.2
+    });
+    const goldFixtureMtl = new THREE.MeshStandardMaterial({ color: 0xfbbf24, metalness: 0.88, roughness: 0.2 });
+    const edgeLineMtl = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.72 });
 
     const stairGroup = new THREE.Group();
     stairGroup.name = 'GlassWings_3D_Staircase';
     scene.add(stairGroup);
 
     const buildingGroup = new THREE.Group();
-    buildingGroup.name = 'GlassWings_3D_Building';
+    buildingGroup.name = 'GlassWings_3D_Full_House_And_Ceiling';
     scene.add(buildingGroup);
 
-    // Helper: 1" Projection Stud Hardware
-    function makeStud(x, y, zBase, studProj, glassThick) {
-      const g = new THREE.Group();
-      const barrel = new THREE.Mesh(new THREE.CylinderGeometry(14, 14, studProj, 20), ss304Mtl);
-      barrel.rotation.x = Math.PI / 2;
-      barrel.position.set(x, y, zBase + studProj * 0.5);
-      g.add(barrel);
+    function updateMaterialPalettes() {
+      // Finish color for Glazing Hardware (SS 304, SS 316, PVD Gold, Rose Gold, Matte Black, Bronze)
+      const finObj = HARDWARE_FINISHES.find((f) => f.id === state.finishId) || HARDWARE_FINISHES[0];
+      hardwareMtl.color.setHex(finObj.colorHex);
+      hardwareMtl.metalness = finObj.metalness;
+      hardwareMtl.roughness = finObj.roughness;
 
-      const cap = new THREE.Mesh(new THREE.CylinderGeometry(24, 24, 10, 28), ss304Mtl);
-      cap.rotation.x = Math.PI / 2;
-      cap.position.set(x, y, zBase + studProj + glassThick + 5);
-      g.add(cap);
-      return g;
+      // Floor & Step Palette
+      if (state.floorStyle === 'italian_marble') {
+        floorMtl.color.setHex(0xede9e0);
+        floorMtl.roughness = 0.14;
+        treadMtl.color.setHex(0xb87338);
+      } else if (state.floorStyle === 'warm_oak') {
+        floorMtl.color.setHex(0xc89666);
+        floorMtl.roughness = 0.28;
+        treadMtl.color.setHex(0x9c6132);
+      } else if (state.floorStyle === 'dark_granite') {
+        floorMtl.color.setHex(0x263040);
+        floorMtl.roughness = 0.18;
+        treadMtl.color.setHex(0x334155);
+      } else {
+        floorMtl.color.setHex(0xdcd3c2);
+        floorMtl.roughness = 0.25;
+        treadMtl.color.setHex(0xc2b29b);
+      }
+
+      // Wall Palette
+      if (state.wallStyle === 'charcoal_luxe') {
+        wallMtl.color.setHex(0x1e293b);
+      } else if (state.wallStyle === 'concrete_arch') {
+        wallMtl.color.setHex(0xcbd5e1);
+      } else if (state.wallStyle === 'warm_ivory') {
+        wallMtl.color.setHex(0xf5f0e6);
+      } else {
+        wallMtl.color.setHex(0xf8fafc);
+      }
     }
 
-    // Helper: Pipe-to-Glass Holder Bracket
-    function makeHolder(x, pipeY, glassZ, glassThick) {
-      const g = new THREE.Group();
-      const clampY = pipeY - 75;
-      const disc = new THREE.Mesh(new THREE.CylinderGeometry(19, 19, glassThick + 10, 20), ss304Mtl);
-      disc.rotation.x = Math.PI / 2;
-      disc.position.set(x, clampY, glassZ + glassThick * 0.5);
-      g.add(disc);
+    // =========================================================================
+    // 3D GLAZING HARDWARE BUILDERS (5 DISTINCT MOUNTING MODES)
+    // =========================================================================
+    function createHardwareForPanel(flightGrp, pStart, pEnd, xStart, xEnd, totalRise, slope, tread, riser, railHeight, glassZ, glassThick, studProj) {
+      const mode = state.hardwareMode;
 
-      const stem = new THREE.Mesh(new THREE.CylinderGeometry(6, 6, 56, 14), ss304Mtl);
-      stem.position.set(x, clampY + 28, glassZ + glassThick * 0.5);
-      g.add(stem);
-      return g;
+      // Top Pipe-to-Glass Holders (Always connect top of glass to Ø50mm handrail)
+      const hX1 = xStart + (xEnd - xStart) * 0.22;
+      const hX2 = xStart + (xEnd - xStart) * 0.78;
+      [hX1, hX2].forEach((hx) => {
+        const pipeY = totalRise + railHeight - hx * slope;
+        const clampY = pipeY - 72;
+        const disc = new THREE.Mesh(new THREE.CylinderGeometry(19, 19, glassThick + 12, 20), hardwareMtl);
+        disc.rotation.x = Math.PI / 2;
+        disc.position.set(hx, clampY, glassZ + glassThick * 0.5);
+        flightGrp.add(disc);
+
+        const stem = new THREE.Mesh(new THREE.CylinderGeometry(6, 6, 56, 14), hardwareMtl);
+        stem.position.set(hx, clampY + 28, glassZ + glassThick * 0.5);
+        flightGrp.add(stem);
+      });
+
+      if (mode === 'spigot_bottom') {
+        // Deck-Mounted Square Spigots (Shivalik / Ozone / ENOX) sitting on top of anchor stair treads
+        [pStart, pEnd].forEach((aStep) => {
+          const stepTopY = (state.numSteps - aStep) * riser;
+          const spX = aStep * tread + tread * 0.5;
+          const spigotBody = new THREE.Mesh(new THREE.BoxGeometry(52, 165, 52), hardwareMtl);
+          spigotBody.position.set(spX, stepTopY + 82.5, glassZ + glassThick * 0.5);
+          flightGrp.add(spigotBody);
+
+          const baseFlange = new THREE.Mesh(new THREE.BoxGeometry(96, 12, 96), hardwareMtl);
+          baseFlange.position.set(spX, stepTopY + 6, glassZ + glassThick * 0.5);
+          flightGrp.add(baseFlange);
+        });
+      } else if (mode === 'uchannel_base') {
+        // Continuous Extruded Aluminium Base Shoe U-Channel along sloped bottom
+        const len = Math.hypot(xEnd - xStart, (xEnd - xStart) * slope);
+        const midX = (xStart + xEnd) * 0.5;
+        const midY = totalRise - midX * slope + 25;
+        const shoeGeo = new THREE.BoxGeometry(len, 115, glassThick + 54);
+        const shoeMesh = new THREE.Mesh(shoeGeo, hardwareMtl);
+        shoeMesh.position.set(midX, midY, glassZ + glassThick * 0.5);
+        shoeMesh.rotation.z = -Math.atan(slope);
+        flightGrp.add(shoeMesh);
+      } else if (mode === 'post_clamp') {
+        // SS 304/316 Baluster Post + 4 D-Shape Glass Clamps
+        const postX = xStart - 2;
+        const postBotY = (state.numSteps - 1 - pStart) * riser;
+        const postTopY = totalRise + railHeight - postX * slope;
+        const postH = postTopY - postBotY;
+        const postMesh = new THREE.Mesh(new THREE.CylinderGeometry(24, 24, postH, 24), hardwareMtl);
+        postMesh.position.set(postX, postBotY + postH * 0.5, glassZ + glassThick * 0.5);
+        flightGrp.add(postMesh);
+
+        // D-Clamps on left and right of panel
+        [0.28, 0.72].forEach((ratio) => {
+          const clampL = new THREE.Mesh(new THREE.BoxGeometry(55, 45, glassThick + 18), hardwareMtl);
+          clampL.position.set(xStart + 26, postBotY + postH * ratio, glassZ + glassThick * 0.5);
+          flightGrp.add(clampL);
+        });
+      } else if (mode === 'spider_point') {
+        // 4-Way / 2-Way Structural Spider Fittings + Swivel Routels
+        [pStart, pEnd].forEach((aStep) => {
+          const spY = (state.numSteps - 1 - aStep) * riser + riser * 0.65;
+          const spX = aStep * tread + tread * 0.5;
+          // Central Spider Body
+          const hub = new THREE.Mesh(new THREE.CylinderGeometry(28, 28, studProj + 14, 20), hardwareMtl);
+          hub.rotation.x = Math.PI / 2;
+          hub.position.set(spX, spY, studProj * 0.5);
+          flightGrp.add(hub);
+
+          // 4 Spider Arms + Routels
+          [[-65, 55], [65, 55], [-65, -45], [65, -45]].forEach(([dx, dy]) => {
+            const arm = new THREE.Mesh(new THREE.BoxGeometry(Math.hypot(dx, dy), 16, 14), hardwareMtl);
+            arm.position.set(spX + dx * 0.5, spY + dy * 0.5, studProj * 0.8);
+            arm.rotation.z = Math.atan2(dy, dx);
+            flightGrp.add(arm);
+
+            const routel = new THREE.Mesh(new THREE.CylinderGeometry(18, 18, glassThick + 16, 20), hardwareMtl);
+            routel.rotation.x = Math.PI / 2;
+            routel.position.set(spX + dx, spY + dy, glassZ + glassThick * 0.5);
+            flightGrp.add(routel);
+          });
+        });
+      } else {
+        // Default CAD #700029: Dual 1" (25.4mm) Side-Mount Projection Studs per anchor step
+        [pStart, pEnd].forEach((aStep) => {
+          const studY = (state.numSteps - 1 - aStep) * riser + riser * 0.56;
+          [0.30, 0.72].forEach((r) => {
+            const sx = aStep * tread + tread * r;
+            const barrel = new THREE.Mesh(new THREE.CylinderGeometry(14, 14, studProj, 20), hardwareMtl);
+            barrel.rotation.x = Math.PI / 2;
+            barrel.position.set(sx, studY, studProj * 0.5);
+            flightGrp.add(barrel);
+
+            const cap = new THREE.Mesh(new THREE.CylinderGeometry(25, 25, 10, 28), hardwareMtl);
+            cap.rotation.x = Math.PI / 2;
+            cap.position.set(sx, studY, studProj + glassThick + 5);
+            flightGrp.add(cap);
+          });
+        });
+      }
     }
 
-    // Helper: Build a single straight stepped flight with 10mm Toughened Glass, 1" Studs & Ø50mm Pipe
-    function buildStraightFlight( { numSteps, tread, riser, stairWidth, railHeight, glassThick, pipeDia, studProj, stepsPerPanel, stepMat } ) {
+    // Build Straight Flight
+    function buildStraightFlight(customWidth) {
       const flightGrp = new THREE.Group();
+      const { numSteps, tread, riser, railHeight, glassThick, pipeDia, studProj, stepsPerPanel } = state;
+      const stairWidth = customWidth || state.stairWidth;
       const totalRun = numSteps * tread;
       const totalRise = numSteps * riser;
       const slope = riser / tread;
 
       // Concrete Waist Slab
       const waistShape = new THREE.Shape();
-      waistShape.moveTo(-750, totalRise);
+      waistShape.moveTo(-800, totalRise);
       waistShape.lineTo(0, totalRise);
       for (let s = 0; s < numSteps; s++) {
         const sx = s * tread;
@@ -758,10 +1036,10 @@
         waistShape.lineTo(sx + tread, syBot);
       }
       waistShape.lineTo(totalRun + 500, 0);
-      waistShape.lineTo(totalRun + 500, -200);
-      waistShape.lineTo(totalRun, -200);
-      waistShape.lineTo(0, totalRise - 210);
-      waistShape.lineTo(-750, totalRise - 210);
+      waistShape.lineTo(totalRun + 500, -210);
+      waistShape.lineTo(totalRun, -210);
+      waistShape.lineTo(0, totalRise - 220);
+      waistShape.lineTo(-800, totalRise - 220);
       waistShape.closePath();
 
       const waistGeo = new THREE.ExtrudeGeometry(waistShape, { depth: stairWidth, bevelEnabled: false });
@@ -775,18 +1053,18 @@
       for (let s = 0; s < numSteps; s++) {
         const sx = s * tread;
         const sy = (numSteps - 1 - s) * riser;
-        const treadMesh = new THREE.Mesh(new THREE.BoxGeometry(tread + 18, 28, stairWidth + 16), stepMat);
-        treadMesh.position.set(sx + tread * 0.5, sy + riser - 14, -stairWidth * 0.5);
+        const treadMesh = new THREE.Mesh(new THREE.BoxGeometry(tread + 20, 30, stairWidth + 18), treadMtl);
+        treadMesh.position.set(sx + tread * 0.5, sy + riser - 15, -stairWidth * 0.5);
         treadMesh.castShadow = true;
         flightGrp.add(treadMesh);
 
-        const riserMesh = new THREE.Mesh(new THREE.BoxGeometry(24, riser, stairWidth + 10), stepMat);
+        const riserMesh = new THREE.Mesh(new THREE.BoxGeometry(24, riser, stairWidth + 10), treadMtl);
         riserMesh.position.set(sx + 12, sy + riser * 0.5, -stairWidth * 0.5);
         flightGrp.add(riserMesh);
       }
 
-      // Stepped 10mm Toughened Glass Panels + 1" Projection Studs + Pipe Holders
-      const glassZ = studProj;
+      // Stepped Toughened Glass Panels + Selected Brand Hardware
+      const glassZ = state.hardwareMode === 'spigot_bottom' ? -45 : studProj;
       const topClearance = railHeight - 55;
 
       for (let pStart = 0; pStart < numSteps; pStart += stepsPerPanel) {
@@ -803,7 +1081,7 @@
         for (let s = pEnd; s >= pStart; s--) {
           const sxR = s === pEnd ? xEnd : (s + 1) * tread;
           const sxL = s === pStart ? xStart : s * tread;
-          const syStep = (numSteps - 1 - s) * riser + 12;
+          const syStep = (numSteps - 1 - s) * riser + (state.hardwareMode === 'spigot_bottom' ? 165 : 12);
           pShape.lineTo(sxR, syStep);
           pShape.lineTo(sxL, syStep);
         }
@@ -811,70 +1089,53 @@
 
         const pGeo = new THREE.ExtrudeGeometry(pShape, { depth: glassThick, bevelEnabled: false });
         pGeo.translate(0, 0, glassZ);
-        const gMesh = new THREE.Mesh(pGeo, glassMtl);
-        flightGrp.add(gMesh);
+        flightGrp.add(new THREE.Mesh(pGeo, glassMtl));
+        flightGrp.add(new THREE.LineSegments(new THREE.EdgesGeometry(pGeo, 15), edgeLineMtl));
 
-        const edges = new THREE.EdgesGeometry(pGeo, 15);
-        flightGrp.add(new THREE.LineSegments(edges, edgeLineMtl));
-
-        [pStart, pEnd].forEach((aStep) => {
-          const studY = (numSteps - 1 - aStep) * riser + riser * 0.56;
-          flightGrp.add(makeStud(aStep * tread + tread * 0.30, studY, 0, studProj, glassThick));
-          flightGrp.add(makeStud(aStep * tread + tread * 0.72, studY, 0, studProj, glassThick));
-        });
-
-        const hX1 = xStart + (xEnd - xStart) * 0.22;
-        const hX2 = xStart + (xEnd - xStart) * 0.78;
-        flightGrp.add(makeHolder(hX1, totalRise + railHeight - hX1 * slope, glassZ, glassThick));
-        flightGrp.add(makeHolder(hX2, totalRise + railHeight - hX2 * slope, glassZ, glassThick));
+        createHardwareForPanel(
+          flightGrp, pStart, pEnd, xStart, xEnd,
+          totalRise, slope, tread, riser, railHeight, glassZ, glassThick, studProj
+        );
       }
 
-      // Ø50mm SS 304 Handrail Pipe
+      // Ø50mm Top Handrail Pipe
       const pipeZ = glassZ + glassThick * 0.5;
       const pipeCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-150, totalRise + railHeight + 150 * slope, pipeZ),
+        new THREE.Vector3(-160, totalRise + railHeight + 160 * slope, pipeZ),
         new THREE.Vector3(0, totalRise + railHeight, pipeZ),
         new THREE.Vector3(totalRun, railHeight, pipeZ),
-        new THREE.Vector3(totalRun + 85, railHeight - 85 * slope - 20, pipeZ)
+        new THREE.Vector3(totalRun + 90, railHeight - 90 * slope - 20, pipeZ)
       ]);
-      const pipeMesh = new THREE.Mesh(new THREE.TubeGeometry(pipeCurve, 48, pipeDia * 0.5, 24, false), ss304Mtl);
-      flightGrp.add(pipeMesh);
+      flightGrp.add(new THREE.Mesh(new THREE.TubeGeometry(pipeCurve, 48, pipeDia * 0.5, 24, false), hardwareMtl));
 
       return flightGrp;
     }
 
-    // Build Rounded / Helical Commercial Staircase with Curved Bent Toughened Glass
-    function buildRoundedHelicalStaircase() {
+    // Build Rounded Helical Staircase
+    function buildRoundedStaircase() {
       const grp = new THREE.Group();
       const { numSteps, riser, stairWidth, railHeight, glassThick, pipeDia, studProj, curveRadius, curveAngle } = state;
       const totalRise = numSteps * riser;
       const totalRad = (curveAngle * Math.PI) / 180;
       const stepRad = totalRad / numSteps;
-
       const innerR = curveRadius - stairWidth * 0.5;
       const outerR = curveRadius + stairWidth * 0.5;
 
-      // Helical Treads, Risers & Structural Spine
       for (let s = 0; s < numSteps; s++) {
         const ang = s * stepRad - totalRad * 0.5;
         const sy = s * riser;
-
-        // Wedge Tread
-        const treadGeo = new THREE.BoxGeometry(stairWidth, 36, (outerR * stepRad) * 1.08);
-        const treadMesh = new THREE.Mesh(treadGeo, marbleStepMtl);
+        const treadMesh = new THREE.Mesh(new THREE.BoxGeometry(stairWidth, 38, (outerR * stepRad) * 1.08), treadMtl);
         treadMesh.position.set(Math.cos(ang) * curveRadius, sy + riser, Math.sin(ang) * curveRadius);
         treadMesh.rotation.y = -ang;
         treadMesh.castShadow = true;
         grp.add(treadMesh);
 
-        // Central Structural Steel Box Spine Segment
-        const spineMesh = new THREE.Mesh(new THREE.BoxGeometry(240, riser + 50, (curveRadius * stepRad) * 1.15), concreteMtl);
+        const spineMesh = new THREE.Mesh(new THREE.BoxGeometry(260, riser + 55, (curveRadius * stepRad) * 1.15), concreteMtl);
         spineMesh.position.set(Math.cos(ang) * curveRadius, sy + riser * 0.5, Math.sin(ang) * curveRadius);
         spineMesh.rotation.y = -ang;
         grp.add(spineMesh);
       }
 
-      // Outer & Inner Curved Bent 10mm Toughened Glass Panels + Curved Ø50mm SS 304 Handrails
       [outerR + studProj, innerR - studProj].forEach((railR, sideIdx) => {
         const isOuter = sideIdx === 0;
         const segments = 64;
@@ -887,42 +1148,32 @@
           const stepIdx = Math.min(numSteps - 1, Math.floor(u * numSteps));
           const yBot = stepIdx * riser + 15;
           const yTop = u * totalRise + railHeight - 45;
-
           const x = Math.cos(ang) * railR;
           const z = Math.sin(ang) * railR;
           positions.push(x, yBot, z, x, yTop, z);
-
           if (i < segments) {
-            const a = i * 2;
-            const b = a + 1;
-            const c = a + 2;
-            const d = a + 3;
+            const a = i * 2, b = a + 1, c = a + 2, d = a + 3;
             indices.push(a, b, d, a, d, c);
           }
         }
+        const curvedGeo = new THREE.BufferGeometry();
+        curvedGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        curvedGeo.setIndex(indices);
+        curvedGeo.computeVertexNormals();
+        grp.add(new THREE.Mesh(curvedGeo, glassMtl));
+        grp.add(new THREE.LineSegments(new THREE.EdgesGeometry(curvedGeo, 18), edgeLineMtl));
 
-        const curvedGlassGeo = new THREE.BufferGeometry();
-        curvedGlassGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-        curvedGlassGeo.setIndex(indices);
-        curvedGlassGeo.computeVertexNormals();
-        const curvedGlassMesh = new THREE.Mesh(curvedGlassGeo, glassMtl);
-        grp.add(curvedGlassMesh);
-        grp.add(new THREE.LineSegments(new THREE.EdgesGeometry(curvedGlassGeo, 18), edgeLineMtl));
-
-        // Helical Ø50mm SS 304 Handrail Pipe
         const railPts = [];
         for (let i = 0; i <= 40; i++) {
           const u = i / 40;
           const ang = u * totalRad - totalRad * 0.5;
           railPts.push(new THREE.Vector3(Math.cos(ang) * railR, u * totalRise + railHeight, Math.sin(ang) * railR));
         }
-        const railCurve = new THREE.CatmullRomCurve3(railPts);
-        grp.add(new THREE.Mesh(new THREE.TubeGeometry(railCurve, 64, pipeDia * 0.5, 24, false), ss304Mtl));
+        grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(railPts), 64, pipeDia * 0.5, 24, false), hardwareMtl));
 
-        // Radial 1" Projection Studs along the curved steps
         for (let s = 0; s < numSteps; s += 2) {
           const ang = (s + 0.5) * stepRad - totalRad * 0.5;
-          const studCap = new THREE.Mesh(new THREE.CylinderGeometry(24, 24, 16, 24), ss304Mtl);
+          const studCap = new THREE.Mesh(new THREE.CylinderGeometry(26, 26, 18, 24), hardwareMtl);
           studCap.position.set(
             Math.cos(ang) * (railR + (isOuter ? 8 : -8)),
             s * riser + riser * 0.65,
@@ -934,88 +1185,272 @@
         }
       });
 
-      grp.position.set(0, -totalRise * 0.4, 0);
+      grp.position.set(0, -totalRise * 0.35, 0);
       return grp;
     }
 
-    // Rebuild Complete 3D Staircase + Selected 3D Building Environment
+    // =========================================================================
+    // FULL 3D HOUSE / BUILDING GENERATOR (FLOORS, CEILING LIGHTS, 4 ELEVATIONS)
+    // =========================================================================
+    function buildFullHouseAndElevations(totalRun, totalRise) {
+      const bGrp = new THREE.Group();
+      const { stairWidth, railHeight, glassThick, studProj, ceilingLightType, facadeType } = state;
+
+      const floorY = -totalRise * 0.35 - 210;
+      const mezY = totalRise * 0.65;
+      const ceilingY = totalRise * 0.65 + 2650;
+
+      const hallW = Math.max(8800, totalRun + 4400);
+      const hallD = 7600;
+
+      // Position dynamic Three.js ceiling point lights
+      ceilingPointLight1.position.set(-hallW * 0.2, ceilingY - 350, 600);
+      ceilingPointLight2.position.set(hallW * 0.22, ceilingY - 350, -600);
+
+      // 1. Ground Floor Slab + Skirting Baseboard
+      const groundFloor = new THREE.Mesh(new THREE.BoxGeometry(hallW, 200, hallD), floorMtl);
+      groundFloor.position.set(0, floorY - 100, -400);
+      groundFloor.receiveShadow = true;
+      bGrp.add(groundFloor);
+
+      // Decorative Floor Carpet / Inlay under Lounge Area
+      const rug = new THREE.Mesh(
+        new THREE.BoxGeometry(2800, 12, 2000),
+        new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.9 })
+      );
+      rug.position.set(950, floorY + 6, 1550);
+      bGrp.add(rug);
+
+      // Modern Living / Lounge Sofa & Coffee Table on Ground Floor
+      const sofaBase = new THREE.Mesh(
+        new THREE.BoxGeometry(2100, 420, 820),
+        new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.75 })
+      );
+      sofaBase.position.set(950, floorY + 210, 1950);
+      sofaBase.castShadow = true;
+      bGrp.add(sofaBase);
+
+      const sofaBack = new THREE.Mesh(
+        new THREE.BoxGeometry(2100, 420, 200),
+        new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.75 })
+      );
+      sofaBack.position.set(950, floorY + 600, 2260);
+      bGrp.add(sofaBack);
+
+      const coffeeTableGlass = new THREE.Mesh(new THREE.BoxGeometry(1100, 18, 650), glassMtl);
+      coffeeTableGlass.position.set(950, floorY + 380, 1150);
+      bGrp.add(coffeeTableGlass);
+
+      // 2. First-Floor Mezzanine Slab & Guardrail Balcony
+      const mezLeftW = 2200;
+      const mezLeft = new THREE.Mesh(new THREE.BoxGeometry(mezLeftW, 220, hallD), floorMtl);
+      mezLeft.position.set(-hallW * 0.5 + mezLeftW * 0.5, mezY - 110, -400);
+      mezLeft.receiveShadow = true;
+      bGrp.add(mezLeft);
+
+      const mezRear = new THREE.Mesh(new THREE.BoxGeometry(hallW, 220, 2100), floorMtl);
+      mezRear.position.set(0, mezY - 110, -hallD * 0.5 + 650);
+      bGrp.add(mezRear);
+
+      // Mezzanine Balcony Toughened Glass Guardrail + Handrail
+      const balGlassW = hallW - mezLeftW - 600;
+      const balGlass = new THREE.Mesh(new THREE.BoxGeometry(balGlassW, railHeight, glassThick), glassMtl);
+      balGlass.position.set(mezLeftW * 0.5, mezY + railHeight * 0.5, -hallD * 0.5 + 1700);
+      bGrp.add(balGlass);
+
+      const balPipe = new THREE.Mesh(
+        new THREE.CylinderGeometry(25, 25, balGlassW, 24),
+        hardwareMtl
+      );
+      balPipe.rotation.z = Math.PI / 2;
+      balPipe.position.set(mezLeftW * 0.5, mezY + railHeight, -hallD * 0.5 + 1700);
+      bGrp.add(balPipe);
+
+      // 3. Rear Wall & Left Wall Elevations
+      const wallH = ceilingY - floorY;
+      const wallCenterY = floorY + wallH * 0.5;
+
+      const backWall = new THREE.Mesh(new THREE.BoxGeometry(hallW, wallH, 200), wallMtl);
+      backWall.position.set(0, wallCenterY, -hallD * 0.5 - 400);
+      backWall.receiveShadow = true;
+      bGrp.add(backWall);
+
+      const leftWall = new THREE.Mesh(new THREE.BoxGeometry(200, wallH, hallD), wallMtl);
+      leftWall.position.set(-hallW * 0.5 - 100, wallCenterY, -400);
+      leftWall.receiveShadow = true;
+      bGrp.add(leftWall);
+
+      // 4. FULL CEILING SLAB, FALSE CEILING COVE & CEILING LIGHT FIXTURES
+      if (state.showCeilingSlab) {
+        const roofSlab = new THREE.Mesh(new THREE.BoxGeometry(hallW + 200, 180, hallD + 200), ceilingMtl);
+        roofSlab.position.set(0, ceilingY + 90, -400);
+        bGrp.add(roofSlab);
+
+        // Perimeter Warm LED Cove Strips around False Ceiling
+        const coveFront = new THREE.Mesh(new THREE.BoxGeometry(hallW - 600, 35, 45), emissiveWarmMtl);
+        coveFront.position.set(0, ceilingY - 25, hallD * 0.5 - 750);
+        bGrp.add(coveFront);
+
+        const coveBack = new THREE.Mesh(new THREE.BoxGeometry(hallW - 600, 35, 45), emissiveWarmMtl);
+        coveBack.position.set(0, ceilingY - 25, -hallD * 0.5 - 150);
+        bGrp.add(coveBack);
+
+        // Recessed Downlight Spots around Ceiling Perimeter
+        for (let lx = -hallW * 0.38; lx <= hallW * 0.38; lx += 1450) {
+          [-hallD * 0.35, hallD * 0.18].forEach((lz) => {
+            const bezel = new THREE.Mesh(new THREE.CylinderGeometry(85, 85, 18, 24), hardwareMtl);
+            bezel.position.set(lx, ceilingY - 8, lz);
+            bGrp.add(bezel);
+
+            const bulb = new THREE.Mesh(new THREE.CylinderGeometry(62, 62, 22, 24), emissiveWarmMtl);
+            bulb.position.set(lx, ceilingY - 12, lz);
+            bGrp.add(bulb);
+          });
+        }
+
+        // Specialized Ceiling Centerpiece Lighting based on ceilingLightType
+        if (ceilingLightType === 'chandelier_cove') {
+          // 3-Tier Luxury Concentric Ring Chandelier suspended from Ceiling
+          [850, 620, 380].forEach((radius, idx) => {
+            const dropY = ceilingY - 480 - idx * 260;
+            const goldRing = new THREE.Mesh(new THREE.TorusGeometry(radius, 22, 16, 64), goldFixtureMtl);
+            goldRing.rotation.x = Math.PI / 2;
+            goldRing.position.set(450, dropY, 650);
+            bGrp.add(goldRing);
+
+            const glowRing = new THREE.Mesh(new THREE.TorusGeometry(radius - 16, 12, 12, 64), emissiveWarmMtl);
+            glowRing.rotation.x = Math.PI / 2;
+            glowRing.position.set(450, dropY - 10, 650);
+            bGrp.add(glowRing);
+          });
+        } else if (ceilingLightType === 'linear_led') {
+          // Suspended Architectural Linear LED Office/Modern Light Bars
+          for (let z = -2200; z <= 1800; z += 950) {
+            const bar = new THREE.Mesh(new THREE.BoxGeometry(hallW * 0.65, 42, 65), emissiveCoolMtl);
+            bar.position.set(200, ceilingY - 220, z);
+            bGrp.add(bar);
+          }
+        } else if (ceilingLightType === 'pendant_cluster') {
+          // Staggered Designer Glowing Glass Globe Pendants
+          for (let i = 0; i < 9; i++) {
+            const ang = (i / 9) * Math.PI * 2;
+            const px = 450 + Math.cos(ang) * 580;
+            const pz = 550 + Math.sin(ang) * 580;
+            const py = ceilingY - 450 - (i % 3) * 260;
+
+            const cord = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, ceilingY - py, 8), hardwareMtl);
+            cord.position.set(px, (ceilingY + py) * 0.5, pz);
+            bGrp.add(cord);
+
+            const globe = new THREE.Mesh(new THREE.SphereGeometry(95, 24, 24), emissiveWarmMtl);
+            globe.position.set(px, py, pz);
+            bGrp.add(globe);
+          }
+        } else if (ceilingLightType === 'skylight_atrium') {
+          // Structural Glass Skylight Grid in Ceiling
+          const skyGlass = new THREE.Mesh(new THREE.BoxGeometry(hallW * 0.55, 24, hallD * 0.45), emissiveCoolMtl);
+          skyGlass.position.set(200, ceilingY - 10, 100);
+          bGrp.add(skyGlass);
+        }
+      }
+
+      // 5. RIGHT / FRONT BUILDING GLASS ELEVATION & FRAMELESS DOORS WITH PATCH FITTINGS
+      if (state.showFrontElevation) {
+        const rightX = hallW * 0.5;
+        // Full-height Curtain Wall / Duplex Window Glazing along Right Elevation (X = rightX)
+        const elevGlass = new THREE.Mesh(new THREE.BoxGeometry(16, wallH - 300, hallD - 800), glassMtl);
+        elevGlass.position.set(rightX, wallCenterY, -400);
+        bGrp.add(elevGlass);
+
+        // Vertical Mullions / Transoms + Frameless Toughened Glass Entrance Door with Dorma/Shivalik PT-10 & PT-20 Patches
+        for (let z = -hallD * 0.4; z <= hallD * 0.35; z += 1350) {
+          const mullion = new THREE.Mesh(new THREE.BoxGeometry(75, wallH, 55), hardwareMtl);
+          mullion.position.set(rightX, wallCenterY, z);
+          bGrp.add(mullion);
+        }
+
+        // Frameless Glass Double Entrance Door with PT-10 Bottom Patch, PT-20 Top Patch & US-10 Patch Lock
+        const doorZ = 950;
+        const doorH = 2350;
+        [doorZ - 480, doorZ + 480].forEach((dz, dIdx) => {
+          const sign = dIdx === 0 ? -1 : 1;
+          // PT-10 Bottom Patch Fitting (165 x 54mm)
+          const pt10 = new THREE.Mesh(new THREE.BoxGeometry(36, 58, 168), hardwareMtl);
+          pt10.position.set(rightX, floorY + 32, dz + sign * 360);
+          bGrp.add(pt10);
+
+          // PT-20 Top Patch Fitting (165 x 54mm)
+          const pt20 = new THREE.Mesh(new THREE.BoxGeometry(36, 58, 168), hardwareMtl);
+          pt20.position.set(rightX, floorY + doorH - 32, dz + sign * 360);
+          bGrp.add(pt20);
+
+          // SS 304 H-Type Pull Handle on Glass Door
+          const handle = new THREE.Mesh(new THREE.CylinderGeometry(16, 16, 650, 16), hardwareMtl);
+          handle.position.set(rightX - 35, floorY + 1080, dz - sign * 320);
+          bGrp.add(handle);
+        });
+      }
+
+      return bGrp;
+    }
+
+    // =========================================================================
+    // REBUILD 3D SCENE + SYNCHRONIZE 2D DRAWINGS
+    // =========================================================================
     function rebuildAll() {
       while (stairGroup.children.length) stairGroup.remove(stairGroup.children[0]);
       while (buildingGroup.children.length) buildingGroup.remove(buildingGroup.children[0]);
 
-      const {
-        stairType,
-        numSteps,
-        tread,
-        riser,
-        stairWidth,
-        railHeight,
-        glassThick,
-        pipeDia,
-        studProj,
-        stepsPerPanel,
-        showBuilding
-      } = state;
+      syncActiveSkuFromSelectors();
+      updateMaterialPalettes();
 
+      const { stairType, numSteps, tread, riser, stairWidth, railHeight, glassThick, studProj } = state;
       const totalRun = numSteps * tread;
       const totalRise = numSteps * riser;
 
       if (stairType === 'rounded') {
-        stairGroup.add(buildRoundedHelicalStaircase());
+        stairGroup.add(buildRoundedStaircase());
       } else if (stairType === 'duplex_u') {
-        // U-Turn Split-Level Duplex Staircase (2 Flights + Mid-Landing + Glass Balustrade)
-        const f1 = buildStraightFlight({ ...state, stepMat: woodTreadMtl });
+        const f1 = buildStraightFlight();
         f1.position.set(-totalRun * 0.5, -totalRise * 0.35, 0);
         stairGroup.add(f1);
 
-        const f2 = buildStraightFlight({ ...state, stepMat: woodTreadMtl });
-        f2.scale.x = -1; // Reverse direction for second flight
+        const f2 = buildStraightFlight();
+        f2.scale.x = -1;
         f2.position.set(totalRun * 0.5, totalRise * 0.65, -stairWidth - 280);
         stairGroup.add(f2);
 
-        // Mid-Landing Slab & Glass Guardrail
         const midLanding = new THREE.Mesh(
-          new THREE.BoxGeometry(1100, 210, stairWidth * 2 + 320),
+          new THREE.BoxGeometry(1150, 210, stairWidth * 2 + 320),
           concreteMtl
         );
-        midLanding.position.set(totalRun * 0.5 + 450, -totalRise * 0.35 - 105, -stairWidth - 140);
+        midLanding.position.set(totalRun * 0.5 + 480, -totalRise * 0.35 - 105, -stairWidth - 140);
         stairGroup.add(midLanding);
       } else if (stairType === 'mall_atrium') {
-        // Shopping Mall Twin Grand Staircase + Atrium Balcony Glass Railings
-        const leftFlight = buildStraightFlight({ ...state, stairWidth: stairWidth * 1.25, stepMat: marbleStepMtl });
-        leftFlight.position.set(-totalRun * 0.5, -totalRise * 0.35, 650);
-        stairGroup.add(leftFlight);
+        const fLeft = buildStraightFlight(stairWidth * 1.2);
+        fLeft.position.set(-totalRun * 0.5, -totalRise * 0.35, 700);
+        stairGroup.add(fLeft);
 
-        const rightFlight = buildStraightFlight({ ...state, stairWidth: stairWidth * 1.25, stepMat: marbleStepMtl });
-        rightFlight.position.set(-totalRun * 0.5, -totalRise * 0.35, -850);
-        stairGroup.add(rightFlight);
-
-        // Upper Mall Atrium Perimeter Glass Balustrade
-        const atriumGlass = new THREE.Mesh(
-          new THREE.BoxGeometry(3600, railHeight - 50, glassThick),
-          glassMtl
-        );
-        atriumGlass.position.set(-totalRun * 0.5 - 1800, totalRise * 0.65 + railHeight * 0.5, 650 + studProj);
-        stairGroup.add(atriumGlass);
+        const fRight = buildStraightFlight(stairWidth * 1.2);
+        fRight.position.set(-totalRun * 0.5, -totalRise * 0.35, -900);
+        stairGroup.add(fRight);
       } else {
-        // Default CAD #700029 Straight Staircase in Duplex Villa
-        const flight = buildStraightFlight({ ...state, stepMat: woodTreadMtl });
+        const flight = buildStraightFlight();
         flight.position.set(-totalRun * 0.5, -totalRise * 0.35, 0);
         stairGroup.add(flight);
 
-        // Upper Mezzanine Balcony Glass Extension ("Extension... 53 Rft")
-        const extGlass = new THREE.Mesh(new THREE.BoxGeometry(1350, railHeight - 55, glassThick), glassMtl);
-        extGlass.position.set(-totalRun * 0.5 - 680, totalRise * 0.65 + (railHeight - 55) * 0.5, studProj);
+        // Upper Landing Extension Glass ("Extension... 53 Rft")
+        const extGlass = new THREE.Mesh(new THREE.BoxGeometry(1400, railHeight - 55, glassThick), glassMtl);
+        extGlass.position.set(-totalRun * 0.5 - 700, totalRise * 0.65 + (railHeight - 55) * 0.5, studProj);
         stairGroup.add(extGlass);
       }
 
-      // Optional Uploaded CAD Blueprint Plane inside 3D Scene
       if (state.showUploadedOverlay && state.uploadedTexture) {
         const planeGeo = new THREE.PlaneGeometry(totalRun + 1800, totalRise + railHeight + 1200);
         const planeMat = new THREE.MeshBasicMaterial({
           map: state.uploadedTexture,
           transparent: true,
-          opacity: 0.48,
+          opacity: 0.5,
           side: THREE.DoubleSide
         });
         const planeMesh = new THREE.Mesh(planeGeo, planeMat);
@@ -1023,69 +1458,17 @@
         stairGroup.add(planeMesh);
       }
 
-      // Build Zero-Cost 3D Architectural Building Environment around the Staircase
-      if (showBuilding) {
-        const floorY = -totalRise * 0.35 - 220;
-        const floorMesh = new THREE.Mesh(new THREE.BoxGeometry(11000, 180, 8500), floorMtl);
-        floorMesh.position.set(0, floorY - 90, -800);
-        floorMesh.receiveShadow = true;
-        buildingGroup.add(floorMesh);
-
-        if (stairType === 'mall_atrium' || stairType === 'rounded') {
-          // Commercial Complex / Shopping Mall Columns, Multi-Level Mezzanine Slabs & Skylight Ring
-          const mezSlab = new THREE.Mesh(new THREE.BoxGeometry(11000, 240, 3200), concreteMtl);
-          mezSlab.position.set(0, totalRise * 0.65 - 120, -2800);
-          buildingGroup.add(mezSlab);
-
-          // Atrium Glass Balustrade along Upper Mall Gallery
-          const galGlass = new THREE.Mesh(new THREE.BoxGeometry(9200, railHeight, glassThick), glassMtl);
-          galGlass.position.set(0, totalRise * 0.65 + railHeight * 0.5, -1200);
-          buildingGroup.add(galGlass);
-
-          // 4 Cylindrical Commercial Atrium Columns with Gold Rings
-          [-3600, 3600].forEach((cx) => {
-            [-2200, 1800].forEach((cz) => {
-              const col = new THREE.Mesh(new THREE.CylinderGeometry(210, 210, totalRise + 2800, 32), wallMtl);
-              col.position.set(cx, floorY + (totalRise + 2800) * 0.5, cz);
-              col.castShadow = true;
-              buildingGroup.add(col);
-
-              const ring = new THREE.Mesh(new THREE.CylinderGeometry(225, 225, 60, 32), accentGoldMtl);
-              ring.position.set(cx, totalRise * 0.65, cz);
-              buildingGroup.add(ring);
-            });
-          });
-        } else {
-          // Luxury Duplex House Interior Walls, Mezzanine Balcony & Modern Chandelier
-          const backWall = new THREE.Mesh(new THREE.BoxGeometry(8600, totalRise + 2800, 200), wallMtl);
-          backWall.position.set(0, floorY + (totalRise + 2800) * 0.5, -stairWidth - 900);
-          backWall.receiveShadow = true;
-          buildingGroup.add(backWall);
-
-          const leftWall = new THREE.Mesh(new THREE.BoxGeometry(200, totalRise + 2800, 7200), wallMtl);
-          leftWall.position.set(-totalRun * 0.5 - 1450, floorY + (totalRise + 2800) * 0.5, -400);
-          buildingGroup.add(leftWall);
-
-          // Duplex Chandelier Rings
-          const chanRing1 = new THREE.Mesh(new THREE.TorusGeometry(420, 14, 16, 48), accentGoldMtl);
-          chanRing1.rotation.x = Math.PI / 2;
-          chanRing1.position.set(600, totalRise + 1350, 900);
-          buildingGroup.add(chanRing1);
-        }
+      if (state.showBuilding) {
+        buildingGroup.add(buildFullHouseAndElevations(totalRun, totalRise));
       }
 
-      // Synchronize Live BOQ Metrics & 2D Engineering Canvas
       update2DAndMetrics();
     }
 
     function update2DAndMetrics() {
       const metrics = computeEngineeringMetrics(state);
-      document.getElementById('m-rft').textContent = `${metrics.totalRft} Rft`;
-      document.getElementById('m-panels').textContent = `${metrics.totalGlassPanels} Nos`;
-      document.getElementById('m-area').textContent = `${metrics.totalGlassAreaSqFt} Sq.Ft`;
-      document.getElementById('m-studs').textContent = `${metrics.totalStuds} Sets`;
+      document.getElementById('lbl-rft-badge').textContent = `${metrics.totalRft} Rft | ${metrics.totalGlassPanels} Panels`;
 
-      // Update panel selector dropdown
       const sel = document.getElementById('sel-panel-idx');
       const prevVal = parseInt(sel.value, 10) || 0;
       sel.innerHTML = '';
@@ -1103,53 +1486,169 @@
         renderElevationCanvas(cadCanvas, state, state.cadTheme);
       } else if (state.activeSheet === 'fabrication') {
         renderFabricationCanvas(cadCanvas, state, state.selectedPanelIdx);
+      } else if (state.activeSheet === 'cutout') {
+        renderHardwareCutoutCanvas(cadCanvas, state, state.activeSkuItem);
       } else {
         renderInstallationCanvas(cadCanvas, state);
       }
     }
 
-    // Handle Resize
-    function resizeViewports() {
-      const rect = pane3D.getBoundingClientRect();
-      if (rect.width > 10 && rect.height > 10) {
-        camera.aspect = rect.width / rect.height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(rect.width, rect.height);
+    // Apply any of the 30 Building Presets
+    function applyBuildingPreset(bldId) {
+      const b = BUILDING_CATALOG.find((x) => x.id === bldId) || BUILDING_CATALOG[0];
+      state.buildingId = b.id;
+      state.stairType = b.stairType;
+      state.numSteps = b.numSteps;
+      state.tread = b.tread;
+      state.riser = b.riser;
+      state.stairWidth = b.stairWidth;
+      state.railHeight = b.railHeight;
+      state.glassThick = b.glassThick;
+      state.ceilingLightType = b.ceilingLightType;
+      state.floorStyle = b.floorStyle;
+      state.wallStyle = b.wallStyle;
+      state.facadeType = b.facadeType;
+      if (b.curveRadius) state.curveRadius = b.curveRadius;
+      if (b.curveAngle) state.curveAngle = b.curveAngle;
+      if (b.finishOverride) {
+        state.finishId = b.finishOverride;
+        selFinish.value = b.finishOverride;
       }
+
+      // Map hardwareMode to default familyId
+      const modeToFam = {
+        stud_side: 'stud_1inch',
+        spigot_bottom: 'spigot_square',
+        uchannel_base: 'uchannel_shoe',
+        post_clamp: 'post_dclamp',
+        spider_point: 'spider_4way'
+      };
+      if (modeToFam[b.hardwareMode]) {
+        state.familyId = modeToFam[b.hardwareMode];
+        selFamily.value = state.familyId;
+      }
+
+      // Sync UI Controls
+      document.getElementById('bld-desc-box').textContent = b.description;
+      document.getElementById('sel-ceiling-lights').value = b.ceilingLightType;
+      document.getElementById('sel-facade').value = b.facadeType;
+      document.getElementById('inp-steps').value = b.numSteps;
+      document.getElementById('inp-tread').value = b.tread;
+      document.getElementById('inp-riser').value = b.riser;
+      document.getElementById('inp-width').value = b.stairWidth;
+      document.getElementById('inp-rail').value = b.railHeight;
+      document.getElementById('inp-thick').value = b.glassThick;
+
+      const curvedBox = document.getElementById('curved-controls');
+      if (b.stairType === 'rounded') {
+        curvedBox.classList.remove('hidden');
+        document.getElementById('inp-radius').value = state.curveRadius;
+        document.getElementById('inp-angle').value = state.curveAngle;
+      } else {
+        curvedBox.classList.add('hidden');
+      }
+
+      updateLabelsFromState();
+      rebuildAll();
     }
-    window.addEventListener('resize', resizeViewports);
+
+    function updateLabelsFromState() {
+      document.getElementById('lbl-steps').textContent = `${state.numSteps} Steps | ${state.stairWidth} mm`;
+      document.getElementById('lbl-tread-riser').textContent = `${state.tread} × ${state.riser} mm`;
+      document.getElementById('lbl-rail-thick').textContent = `${state.railHeight} mm | ${state.glassThick} mm Glass`;
+      document.getElementById('lbl-stud-spp').textContent = `${state.studProj} mm | ${state.stepsPerPanel} Steps/Panel`;
+      document.getElementById('lbl-curve').textContent = `R: ${state.curveRadius}mm | ${state.curveAngle}°`;
+    }
+
+    // Category Pills for 30 Buildings
+    document.querySelectorAll('.cat-pill').forEach((pill) => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.cat-pill').forEach((p) => p.classList.remove('active'));
+        pill.classList.add('active');
+        populateBuildingSelect(pill.dataset.cat);
+      });
+    });
+
+    selBuilding.addEventListener('change', (e) => applyBuildingPreset(e.target.value));
+    document.getElementById('sel-ceiling-lights').addEventListener('change', (e) => {
+      state.ceilingLightType = e.target.value;
+      rebuildAll();
+    });
+    document.getElementById('sel-facade').addEventListener('change', (e) => {
+      state.facadeType = e.target.value;
+      rebuildAll();
+    });
+
+    selBrand.addEventListener('change', (e) => { state.brandId = e.target.value; rebuildAll(); });
+    selFinish.addEventListener('change', (e) => { state.finishId = e.target.value; rebuildAll(); });
+    selFamily.addEventListener('change', (e) => { state.familyId = e.target.value; rebuildAll(); });
+
+    // Sliders & Checkboxes
+    [
+      'inp-steps', 'inp-tread', 'inp-riser', 'inp-width', 'inp-rail',
+      'inp-thick', 'inp-stud', 'inp-spp', 'inp-radius', 'inp-angle',
+      'inp-client', 'inp-location',
+      'chk-building-mesh', 'chk-ceiling-slab', 'chk-front-elevation', 'chk-3d-overlay'
+    ].forEach((id) => {
+      document.getElementById(id).addEventListener('input', () => {
+        state.numSteps = parseInt(document.getElementById('inp-steps').value, 10);
+        state.tread = parseFloat(document.getElementById('inp-tread').value);
+        state.riser = parseFloat(document.getElementById('inp-riser').value);
+        state.stairWidth = parseFloat(document.getElementById('inp-width').value);
+        state.railHeight = parseFloat(document.getElementById('inp-rail').value);
+        state.glassThick = parseFloat(document.getElementById('inp-thick').value);
+        state.studProj = parseFloat(document.getElementById('inp-stud').value);
+        state.stepsPerPanel = parseInt(document.getElementById('inp-spp').value, 10);
+        state.curveRadius = parseFloat(document.getElementById('inp-radius').value);
+        state.curveAngle = parseFloat(document.getElementById('inp-angle').value);
+        state.clientName = document.getElementById('inp-client').value;
+        state.projectLocation = document.getElementById('inp-location').value;
+        state.showBuilding = document.getElementById('chk-building-mesh').checked;
+        state.showCeilingSlab = document.getElementById('chk-ceiling-slab').checked;
+        state.showFrontElevation = document.getElementById('chk-front-elevation').checked;
+        state.showUploadedOverlay = document.getElementById('chk-3d-overlay').checked;
+        updateLabelsFromState();
+        rebuildAll();
+      });
+    });
+
+    document.getElementById('inp-exposure').addEventListener('input', (e) => {
+      renderer.toneMappingExposure = parseFloat(e.target.value);
+    });
 
     // Camera Presets
     function setCamera(mode) {
       if (mode === 'persp') {
-        camera.position.set(1800, 1450, 4400);
-        controls.target.set(0, 320, -200);
+        camera.position.set(1600, 1250, 4600);
+        controls.target.set(0, 450, -200);
+      } else if (mode === 'ceiling') {
+        camera.position.set(-1800, 350, 3200);
+        controls.target.set(350, 2200, 200);
+      } else if (mode === 'facade') {
+        camera.position.set(7800, 1400, 2800);
+        controls.target.set(1200, 900, 0);
       } else if (mode === 'elev') {
-        camera.position.set(0, 420, 4800);
-        controls.target.set(0, 420, 0);
-      } else if (mode === 'top') {
-        camera.position.set(600, 4900, 2600);
-        controls.target.set(0, 200, -400);
+        camera.position.set(0, 450, 5200);
+        controls.target.set(0, 450, 0);
       } else if (mode === 'stud') {
         camera.position.set(-550, 680, 950);
         controls.target.set(-750, 580, 25);
       }
       controls.update();
     }
-
     document.getElementById('cam-persp').addEventListener('click', () => setCamera('persp'));
+    document.getElementById('cam-ceiling').addEventListener('click', () => setCamera('ceiling'));
+    document.getElementById('cam-facade').addEventListener('click', () => setCamera('facade'));
     document.getElementById('cam-elev').addEventListener('click', () => setCamera('elev'));
-    document.getElementById('cam-top').addEventListener('click', () => setCamera('top'));
     document.getElementById('cam-stud').addEventListener('click', () => setCamera('stud'));
 
-    // Top View Mode Tabs (Split / 3D / 2D Elevation / 2D Fabrication / 2D Installation)
+    // Top View Mode Tabs
     const pane2D = document.getElementById('pane-2d');
     document.querySelectorAll('.view-tabs .tab-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.view-tabs .tab-btn').forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
         const v = btn.dataset.view;
-
         if (v === 'split') {
           pane3D.classList.remove('hidden');
           pane2D.classList.remove('hidden');
@@ -1168,19 +1667,11 @@
       });
     });
 
-    // 2D Sheet Sub-Tabs
-    document.getElementById('sheet-btn-elev').addEventListener('click', () => {
-      state.activeSheet = 'elevation';
-      update2DAndMetrics();
-    });
-    document.getElementById('sheet-btn-fab').addEventListener('click', () => {
-      state.activeSheet = 'fabrication';
-      update2DAndMetrics();
-    });
-    document.getElementById('sheet-btn-inst').addEventListener('click', () => {
-      state.activeSheet = 'installation';
-      update2DAndMetrics();
-    });
+    // 2D Sheet Switchers
+    document.getElementById('sheet-btn-elev').addEventListener('click', () => { state.activeSheet = 'elevation'; update2DAndMetrics(); });
+    document.getElementById('sheet-btn-fab').addEventListener('click', () => { state.activeSheet = 'fabrication'; update2DAndMetrics(); });
+    document.getElementById('sheet-btn-cutout').addEventListener('click', () => { state.activeSheet = 'cutout'; update2DAndMetrics(); });
+    document.getElementById('sheet-btn-inst').addEventListener('click', () => { state.activeSheet = 'installation'; update2DAndMetrics(); });
     document.getElementById('sel-panel-idx').addEventListener('change', (e) => {
       state.selectedPanelIdx = parseInt(e.target.value, 10) || 0;
       state.activeSheet = 'fabrication';
@@ -1191,77 +1682,87 @@
       update2DAndMetrics();
     });
 
-    // Building & Staircase Typology Cards
-    document.querySelectorAll('.preset-card').forEach((card) => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.preset-card').forEach((c) => c.classList.remove('active'));
-        card.classList.add('active');
-        const p = card.dataset.preset;
-        const curvedBox = document.getElementById('curved-controls');
+    // =========================================================================
+    // 1,080+ SKU HARDWARE BRAND CATALOGUE MODAL LOGIC
+    // =========================================================================
+    const catalogModal = document.getElementById('catalog-modal');
+    const skuGrid = document.getElementById('sku-grid-container');
 
-        if (p === 'straight_house') {
-          state.stairType = 'straight';
-          state.buildingEnv = 'duplex_house';
-          curvedBox.classList.add('hidden');
-        } else if (p === 'rounded_complex') {
-          state.stairType = 'rounded';
-          state.buildingEnv = 'commercial_complex';
-          curvedBox.classList.remove('hidden');
-        } else if (p === 'mall_atrium') {
-          state.stairType = 'mall_atrium';
-          state.buildingEnv = 'shopping_mall';
-          curvedBox.classList.add('hidden');
-        } else if (p === 'duplex_u') {
-          state.stairType = 'duplex_u';
-          state.buildingEnv = 'split_penthouse';
-          curvedBox.classList.add('hidden');
+    function renderCatalogGrid() {
+      const q = document.getElementById('cat-search').value.trim().toLowerCase();
+      const bFilter = catFilterBrand.value;
+      const famFilter = catFilterFamily.value;
+      const finFilter = catFilterFinish.value;
+
+      const filtered = FULL_CATALOG.filter((item) => {
+        if (bFilter !== 'ALL' && item.brandId !== bFilter) return false;
+        if (famFilter !== 'ALL' && item.familyId !== famFilter) return false;
+        if (finFilter !== 'ALL' && item.finishId !== finFilter) return false;
+        if (q) {
+          const hay = `${item.sku} ${item.brandName} ${item.familyTitle} ${item.finishName} ${item.specSummary}`.toLowerCase();
+          return hay.includes(q);
         }
-        rebuildAll();
+        return true;
       });
-    });
 
-    // Parametric Sliders Binding
-    function bindSliders() {
-      const sync = () => {
-        state.numSteps = parseInt(document.getElementById('inp-steps').value, 10);
-        state.tread = parseFloat(document.getElementById('inp-tread').value);
-        state.riser = parseFloat(document.getElementById('inp-riser').value);
-        state.stairWidth = parseFloat(document.getElementById('inp-width').value);
-        state.railHeight = parseFloat(document.getElementById('inp-rail').value);
-        state.glassThick = parseFloat(document.getElementById('inp-thick').value);
-        state.studProj = parseFloat(document.getElementById('inp-stud').value);
-        state.stepsPerPanel = parseInt(document.getElementById('inp-spp').value, 10);
-        state.curveRadius = parseFloat(document.getElementById('inp-radius').value);
-        state.curveAngle = parseFloat(document.getElementById('inp-angle').value);
-        state.clientName = document.getElementById('inp-client').value;
-        state.projectLocation = document.getElementById('inp-location').value;
-        state.showBuilding = document.getElementById('chk-building-mesh').checked;
-        state.showUploadedOverlay = document.getElementById('chk-3d-overlay').checked;
+      document.getElementById('cat-count-label').textContent = `${filtered.length} SKUs Found`;
+      skuGrid.innerHTML = '';
 
-        document.getElementById('lbl-steps').textContent = `${state.numSteps} Steps`;
-        document.getElementById('lbl-tread-riser').textContent = `${state.tread} × ${state.riser} mm`;
-        document.getElementById('lbl-width').textContent = `${state.stairWidth} mm`;
-        document.getElementById('lbl-rail').textContent = `${state.railHeight} mm`;
-        document.getElementById('lbl-thick').textContent = `${state.glassThick} mm`;
-        document.getElementById('lbl-stud').textContent = `${state.studProj} mm`;
-        document.getElementById('lbl-spp').textContent = `${state.stepsPerPanel} Steps/Panel`;
-        document.getElementById('lbl-radius').textContent = `${state.curveRadius} mm`;
-        document.getElementById('lbl-angle').textContent = `${state.curveAngle}°`;
+      filtered.slice(0, 120).forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'sku-card';
+        const cutoutText = item.notchWidthMm
+          ? `CNC Cutout: ${item.notchWidthMm}×${item.notchHeightMm}mm + Ø${item.holeDiaMm}mm`
+          : item.holeDiaMm > 0
+            ? `CNC Hole: Ø${item.holeDiaMm}mm ${item.counterboreDiaMm ? '(C-Bore Ø' + item.counterboreDiaMm + 'mm)' : ''}`
+            : 'Dry-Glaze Wedge Profile (No Glass Holes)';
 
-        rebuildAll();
-      };
-
-      [
-        'inp-steps', 'inp-tread', 'inp-riser', 'inp-width', 'inp-rail',
-        'inp-thick', 'inp-stud', 'inp-spp', 'inp-radius', 'inp-angle',
-        'inp-client', 'inp-location', 'chk-building-mesh', 'chk-3d-overlay'
-      ].forEach((id) => {
-        document.getElementById(id).addEventListener('input', sync);
+        card.innerHTML = `
+          <div>
+            <div class="sku-badge-row">
+              <span class="sku-code">${item.sku}</span>
+              <span class="sku-brand">${item.brandName}</span>
+            </div>
+            <div class="sku-title" style="margin-top:6px;">${item.familyTitle}</div>
+            <div style="font-size:0.72rem;color:#38bdf8;margin-top:3px;">Finish: ${item.finishName}</div>
+            <div class="sku-spec" style="margin-top:5px;">${item.specSummary}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="sku-cutout-tag">${cutoutText}</div>
+            <button class="btn btn-primary" style="width:100%;">✓ Apply to 3D Staircase & View 2D CNC Cutout</button>
+          </div>
+        `;
+        card.querySelector('button').addEventListener('click', () => {
+          state.brandId = item.brandId;
+          state.familyId = item.familyId;
+          state.finishId = item.finishId;
+          selBrand.value = item.brandId;
+          selFamily.value = item.familyId;
+          selFinish.value = item.finishId;
+          state.activeSheet = 'cutout';
+          catalogModal.classList.add('hidden');
+          rebuildAll();
+        });
+        skuGrid.appendChild(card);
       });
     }
-    bindSliders();
 
-    // 1. Upload CAD Image / PDF Drawing Handler (Auto-Extracts & Updates 3D + 2D)
+    document.getElementById('btn-open-catalog').addEventListener('click', () => {
+      catalogModal.classList.remove('hidden');
+      renderCatalogGrid();
+    });
+    document.getElementById('btn-browse-1000').addEventListener('click', () => {
+      catalogModal.classList.remove('hidden');
+      renderCatalogGrid();
+    });
+    document.getElementById('btn-close-catalog').addEventListener('click', () => {
+      catalogModal.classList.add('hidden');
+    });
+    ['cat-search', 'cat-filter-brand', 'cat-filter-family', 'cat-filter-finish'].forEach((id) => {
+      document.getElementById(id).addEventListener('input', renderCatalogGrid);
+    });
+
+    // Upload CAD Image / PDF Handler
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-upload');
     const previewBox = document.getElementById('upload-preview-box');
@@ -1269,14 +1770,9 @@
     const statusBadge = document.getElementById('upload-status-badge');
 
     dropZone.addEventListener('click', () => fileInput.click());
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropZone.classList.add('dragover');
-    });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); });
     dropZone.addEventListener('drop', (e) => {
       e.preventDefault();
-      dropZone.classList.remove('dragover');
       if (e.dataTransfer.files.length) handleUploadedFile(e.dataTransfer.files[0]);
     });
     fileInput.addEventListener('change', (e) => {
@@ -1289,8 +1785,7 @@
       previewBox.style.display = 'block';
       statusBadge.style.display = 'block';
       statusBadge.textContent = '✓ Loaded CAD Drawing #700029 — 3D & 2D Synced!';
-      const texLoader = new THREE.TextureLoader();
-      state.uploadedTexture = texLoader.load(sampleUrl, () => {
+      state.uploadedTexture = new THREE.TextureLoader().load(sampleUrl, () => {
         document.getElementById('chk-3d-overlay').checked = true;
         state.showUploadedOverlay = true;
         rebuildAll();
@@ -1298,27 +1793,14 @@
     });
 
     function handleUploadedFile(file) {
-      const nameLower = file.name.toLowerCase();
       statusBadge.style.display = 'block';
-      statusBadge.textContent = `✓ Parsed "${file.name}" — 3D Staircase & 2D Fabrication Sheets Updated!`;
-
-      // Smart CAD heuristic detection from filename or image aspect
-      if (nameLower.includes('curve') || nameLower.includes('round') || nameLower.includes('spiral')) {
-        document.querySelector('[data-preset="rounded_complex"]').click();
-      } else if (nameLower.includes('mall') || nameLower.includes('commercial')) {
-        document.querySelector('[data-preset="mall_atrium"]').click();
-      } else if (nameLower.includes('duplex') || nameLower.includes('landing')) {
-        document.querySelector('[data-preset="duplex_u"]').click();
-      }
-
+      statusBadge.textContent = `✓ Extracted "${file.name}" — 3D Building & 2D Cutouts Updated!`;
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (ev) => {
           previewImg.src = ev.target.result;
           previewBox.style.display = 'block';
-
-          const texLoader = new THREE.TextureLoader();
-          state.uploadedTexture = texLoader.load(ev.target.result, () => {
+          state.uploadedTexture = new THREE.TextureLoader().load(ev.target.result, () => {
             document.getElementById('chk-3d-overlay').checked = true;
             state.showUploadedOverlay = true;
             rebuildAll();
@@ -1326,19 +1808,16 @@
         };
         reader.readAsDataURL(file);
       } else {
-        // PDF or DXF uploaded
-        previewBox.style.display = 'none';
         rebuildAll();
       }
     }
 
-    // Export Buttons (2D DXF, 2D PNG, 3D OBJ, 3ds Max .MS)
+    // Exports (2D DXF, 2D PNG, 4-Page 2D PDF Package, 3D OBJ, 3ds Max .MS)
     document.getElementById('btn-export-dxf').addEventListener('click', () => {
-      const dxfContent = generateAutoCADDXF(state);
-      const blob = new Blob([dxfContent], { type: 'application/dxf' });
+      const dxf = generateAutoCADDXF(state);
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `GlassWings_2D_Elevation_And_Fabrication_${state.drawingNo}.dxf`;
+      a.href = URL.createObjectURL(new Blob([dxf], { type: 'application/dxf' }));
+      a.download = `GlassWings_${state.buildingId}_${state.activeSkuItem.sku}.dxf`;
       a.click();
     });
 
@@ -1346,47 +1825,41 @@
       const cadCanvas = document.getElementById('cad-canvas');
       const a = document.createElement('a');
       a.href = cadCanvas.toDataURL('image/png');
-      a.download = `GlassWings_2D_${state.activeSheet.toUpperCase()}_${state.drawingNo}.png`;
+      a.download = `GlassWings_2D_${state.activeSheet.toUpperCase()}_${state.buildingId}.png`;
       a.click();
     });
 
     document.getElementById('btn-export-pdf').addEventListener('click', () => {
-      const offCanvas = document.createElement('canvas');
-      offCanvas.width = 1280;
-      offCanvas.height = 820;
-
-      renderElevationCanvas(offCanvas, state, 'light');
-      const imgElev = offCanvas.toDataURL('image/png');
-
-      renderFabricationCanvas(offCanvas, state, state.selectedPanelIdx);
-      const imgFab = offCanvas.toDataURL('image/png');
-
-      renderInstallationCanvas(offCanvas, state);
-      const imgInst = offCanvas.toDataURL('image/png');
+      const off = document.createElement('canvas');
+      off.width = 1280;
+      off.height = 820;
+      renderElevationCanvas(off, state, 'light');
+      const s1 = off.toDataURL('image/png');
+      renderFabricationCanvas(off, state, state.selectedPanelIdx);
+      const s2 = off.toDataURL('image/png');
+      renderHardwareCutoutCanvas(off, state, state.activeSkuItem);
+      const s3 = off.toDataURL('image/png');
+      renderInstallationCanvas(off, state);
+      const s4 = off.toDataURL('image/png');
 
       const win = window.open('', '_blank');
       if (win) {
         win.document.write(`
           <!DOCTYPE html>
-          <html>
-          <head>
-            <title>Glass Wings Studio — 2D Elevation, CNC Glass Fabrication & Installation Package (#${state.drawingNo})</title>
-            <style>
-              body { margin: 0; padding: 20px; font-family: Arial, sans-serif; background: #f8fafc; color: #0f172a; }
-              .page { page-break-after: always; margin-bottom: 24px; background: #fff; padding: 12px; border: 1px solid #cbd5e1; }
-              .page:last-child { page-break-after: auto; }
-              img { width: 100%; height: auto; display: block; }
-              h2 { font-size: 16px; margin: 0 0 8px 0; color: #0284c7; }
-              @media print { body { padding: 0; background: #fff; } .page { border: none; padding: 0; margin: 0; } }
-            </style>
-          </head>
-          <body>
-            <div class="page"><h2>SHEET 1/3: 2D CAD ELEVATION & SECTION VIEW (DRAWING #${state.drawingNo})</h2><img src="${imgElev}"/></div>
-            <div class="page"><h2>SHEET 2/3: 2D CNC GLASS FABRICATION & HOLE DRILLING SHEET</h2><img src="${imgFab}"/></div>
-            <div class="page"><h2>SHEET 3/3: 2D SITE INSTALLATION BLUEPRINT & BILL OF QUANTITIES (BOQ)</h2><img src="${imgInst}"/></div>
-            <script>window.onload = () => setTimeout(() => window.print(), 400);<\/script>
-          </body>
-          </html>
+          <html><head><title>Glass Wings Studio — Complete 4-Sheet Engineering Package</title>
+          <style>
+            body{margin:0;padding:16px;font-family:Arial,sans-serif;background:#f8fafc;}
+            .page{page-break-after:always;margin-bottom:20px;background:#fff;padding:10px;border:1px solid #cbd5e1;}
+            img{width:100%;display:block;}
+            h3{margin:0 0 6px 0;color:#0284c7;font-size:15px;}
+            @media print{body{padding:0;}.page{border:none;padding:0;margin:0;}}
+          </style></head><body>
+          <div class="page"><h3>SHEET 1/4: 2D CAD ELEVATION & SECTION (${state.buildingId})</h3><img src="${s1}"/></div>
+          <div class="page"><h3>SHEET 2/4: 2D CNC GLASS FABRICATION CUT-SHEET</h3><img src="${s2}"/></div>
+          <div class="page"><h3>SHEET 3/4: GLAZING HARDWARE CNC CUTOUT (${state.activeSkuItem.sku} - ${state.activeSkuItem.brandName})</h3><img src="${s3}"/></div>
+          <div class="page"><h3>SHEET 4/4: 2D SITE INSTALLATION & BILL OF QUANTITIES (BOQ)</h3><img src="${s4}"/></div>
+          <script>window.onload=()=>setTimeout(()=>window.print(),400);<\/script>
+          </body></html>
         `);
         win.document.close();
       }
@@ -1394,27 +1867,39 @@
 
     document.getElementById('btn-export-obj').addEventListener('click', () => {
       const exporter = new OBJExporter();
-      const objStr = exporter.parse(stairGroup);
-      const blob = new Blob([objStr], { type: 'text/plain' });
+      const exportGrp = new THREE.Group();
+      exportGrp.add(stairGroup.clone());
+      if (state.showBuilding) exportGrp.add(buildingGroup.clone());
+      const objStr = exporter.parse(exportGrp);
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `GlassWings_3D_${state.stairType}_Staircase.obj`;
+      a.href = URL.createObjectURL(new Blob([objStr], { type: 'text/plain' }));
+      a.download = `GlassWings_Full3D_${state.buildingId}.obj`;
       a.click();
     });
 
     document.getElementById('btn-export-ms').addEventListener('click', () => {
       const msCode = generateDynamicMaxScript(state);
-      const blob = new Blob([msCode], { type: 'text/plain' });
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `GlassWings_Custom_${state.stairType}_3dsMax.ms`;
+      a.href = URL.createObjectURL(new Blob([msCode], { type: 'text/plain' }));
+      a.download = `GlassWings_3dsMax_${state.buildingId}.ms`;
       a.click();
     });
 
-    // Initial Boot
+    function resizeViewports() {
+      const rect = pane3D.getBoundingClientRect();
+      if (rect.width > 10 && rect.height > 10) {
+        camera.aspect = rect.width / rect.height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(rect.width, rect.height);
+      }
+    }
+    window.addEventListener('resize', resizeViewports);
+
+    // Boot
+    populateBuildingSelect('ALL');
+    applyBuildingPreset('BLD-01');
     resizeViewports();
     setCamera('persp');
-    rebuildAll();
 
     function animate() {
       requestAnimationFrame(animate);
